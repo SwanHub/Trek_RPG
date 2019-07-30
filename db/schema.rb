@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 9) do
+ActiveRecord::Schema.define(version: 11) do
 
   create_table "adventurers", force: :cascade do |t|
     t.string "type"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 9) do
     t.integer "blk"
     t.integer "hp"
     t.integer "luck"
-    t.string "type"
+    t.string "item_type"
   end
 
   create_table "users", force: :cascade do |t|

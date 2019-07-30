@@ -1,0 +1,222 @@
+Notes on gameplay
+
+TROLL TREK?
+
+TABLES
+
+User ---------------
+  relationships ----
+    - has many adventurer
+    - has many items through adventurer
+    - has many battles through adventurer
+  attrributes ------
+    - name
+    - battlecry (CHOOSE WISELY)
+
+Game Characters ----
+  attributes -------
+    - evil? (t/f)
+    - Names: fantasy name generator (stored in an array)
+    - villain characters
+        - LVL 1 Bosses: Jay-Z, Mark Zuckerberg, Dio etc. (we'll generate list over time)
+        - LVL 2 bosses
+        - LVL 3 bosses
+        - LVL 4 bosses
+
+    - MINIONS
+        - Trolls
+
+    - MAIN CHARACTER
+      - 3 default character types for the user
+      - Types of characters to choose from @ beginning?
+          - Vampire (damages and heals for part of the damage)
+          - Tax Collector
+          - Gambler
+          - Juggernaut
+          - Street Rat
+      - currency
+      - hp
+      - atk
+      - block
+      - luck
+
+Run-in (Battle) -------------
+  attributes -------
+    - battle? (t/f)
+    - exchange?
+
+Items --------------
+  attributes -------
+    - cost
+    - atk power
+    - vampirism
+    - thwart
+    - you pick up the opponent's weapon
+
+Location -----------
+  options: Marriott(Ritz), CoffeeShop, Walmart, Bass Pro Shop (lvls 3 and 4)
+
+GENERAL GAMEFLOW
+  - You are moving from town to town, fighting throughout.
+  - If you beat one, you get their weapon.
+  - Multiple minions per level? Sub-villains.
+  - For final boss, you automatically get their weapon, etc.
+  - For minions, it's a chance.
+  - 3 items total.
+  - Available at all times: "I don't want to fight. I'm going to the beach. If we could play music to that..."
+  - Images associated with each place you go to...
+  - Social media break? (adds really small amount to one attribute)
+
+Start -------------
+
+START MENU -- Creating a profile - User creates a Character
+
+New GAME ---- choose character type, etc.
+  - Choose a character type (one of three) (Character names pulled from API?)
+  - Choose a character name as well...
+  - randomize the attribute within the character type.
+
+LVL 1 ---  go to the first town
+  - ENTER TOWN
+    - YOU GOT OPTIONS You don't HAVE to go into town and get an item. You can just leave.
+  - First encounter is the shop where you can buy items.
+  - You could just fight the enemy fisticuffs.
+  - start out with 10 hp
+
+LVL 2 ---
+  - Inn ($$$ = Marriott // One is a motel)/ Shop ($$$ different items)
+
+LVL 3 ---
+  - Blacksmith  (for an upgrade) // Inn ($$$ = Marriott // One is a motel)/ Shop ($$$ different items)
+
+LVL 4 ---
+  - Blacksmith (for an upgrade) // Inn ($$$ = Marriott // One is a motel) / Shop ($$$ different items)
+  - Final Boss
+
+  =======================================================================
+
+  "HOW TO PROJECT MEETING w JARED"
+
+  1. Establish Rules of Engagement
+     - How we're going to work in our groups / pairs.
+     - bothers me when ...
+     - get it out in the open
+
+        DAN AND JACKSON
+        :: Time management :: no problems there
+        :: Communication :: Discord –––– for screen sharing
+        :: Splitting up projects ... to start, paired.
+
+  ========================================================================
+
+  5. A USER SHOULD BE ABLE TO:
+
+     - Sign in with their username
+     - create a character
+          - choose a character type
+          - name the character
+    - START GAME
+          - Enter LVL 1
+              - Just a Shop?
+              - social media api without any effect.
+              - Fight a minion? (more beneficial for ppl to go here)
+              - after each battle you heal just a little bit.
+              - Social Media break... to heal in one of your stats...
+              - The boss...
+          - Enter LVL 2
+              - Shop or Heal @ hotel?
+              - social media api without any effect.
+              - Fight a minion?
+              - after each battle you heal just a little bit.
+              - Social Media break... to heal in one of your stats...
+              - The boss...
+          - Enter LVL 3
+              - Go to town?
+              - social media api without any effect.
+              - Fight a minion?
+              - after each battle you heal just a little bit. (+5hp)
+              - Social Media break... to heal in one of your stats...
+              - The boss...
+          - Enter LVL 4
+              - Go to town?
+              - social media api without any effect.
+              - Fight a minion?
+              - after each battle you heal just a little bit. (+5hp)
+              - Social Media break... to heal in one of your stats...
+              - The boss...
+
+    - The "GAME" ends and your stats, your history, your run-ins, your results are all saved.
+
+    - The next time you play, when you sign in you can see your trek history.
+    - Then we can also do general leaderboards...
+        - best stats at the end of the game?
+        - quickest trek?
+
+    - You can play again, but have to go through this whole process again.
+    - If you lose mid-game, your stats get saved, but the character is dead. (deceased? true. )
+
+    ============================================================================
+
+    - Different caliber of weapons.
+    - Monsters have access to items of their appropriate level.
+    - 10 items per level.
+
+    ## item stats
+    - LVL 1: 2-5
+    - LVL 2: 6-10
+    - LVL 3: 11-15
+    - LVL 4: 16-20
+    - Potion :: 25%
+
+    ## player stats (1-2!, 2-3, 3-5, 5-7 8-9!)
+    - Juggernaut (atk[low], blk[high], hp[high], luck[medium], currency[medium])
+    - Vampire (atk[medium], blk[medium], hp[medium], luck[medium], currency[medium])
+    - Street Rat (atk[high!], blk[low], hp[low], luck[low], currency[low!])
+    - Gambler (atk[low], blk[low], hp[low], luck[high], currency[high])
+    - Tax Collector (atk[low!], blk[low!], hp[low!], luck[low!], currency[high!])
+
+    ## minion stats (4-6, 7-9, 11-15, 16-20)
+    - LVL 1: (atk, blk, hp, currency)
+    - LVL 2: (atk, blk, hp, currency)
+    - LVL 3: (atk, blk, hp, currency)
+    - LVL 4: (atk, blk, hp, currency)
+
+    ## boss stats (always more than the player stats // possibly player better stats w items)
+    - based on the player stats... 2-2.5x player stats... for hp.
+    - for atk, blk have the boss stat be (a random number around) 1.25x player stat.
+
+    ## social media break
+    - LVL 1: +1 in whatever category, not currency.
+    - LVL 2: +2
+    - LVL 3: +3
+    - LVL 4: +4
+
+    - atk
+    - hp
+    - blk
+    - luck
+    - currency
+
+    ============================================================================
+    WIRE FRAME
+
+    The layout of the page...
+    ============================================================================
+    What is our MVP? And our stretch goals?
+
+    We have users
+       they create a character
+       enemy characters created
+       a "battle"
+
+    Stretch:
+       Twitter API
+    ============================================================================
+    EXTRAS:
+
+    - Shopkeeper will kill you if you attack her...
+    - sell your items back to shop?
+    - War forged items, when you kill an enemy it has increased stats. Random 1 in 20.
+    - 1 bargain item...
+    - extras?
+    - Sound?

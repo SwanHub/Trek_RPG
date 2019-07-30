@@ -1,4 +1,4 @@
 class Battle < ActiveRecord::Base
-  belongs_to :adventurers
-  has_one :enemies 
+  belongs_to :adventurer
+  has_one :enemies
 end

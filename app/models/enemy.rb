@@ -1,4 +1,4 @@
 class Enemy < ActiveRecord::Base
-    belongs_to :items
+    belongs_to :item
     has_one :battles
 end

@@ -1,6 +1,6 @@
 class Adventurer < ActiveRecord::Base
   has_many :battles
-  belongs_to :users
-  belongs_to :items
+  belongs_to :user
+  belongs_to :item
 
 end

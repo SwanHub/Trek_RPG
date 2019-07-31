@@ -222,17 +222,30 @@ LVL 4 ---
     - Sound?
     - The items associated with a user after victorious treks are beneficial in
       some way. I.e. they increase something or give the user a gold star... or
-      make it to the leaderboards. 
+      make it to the leaderboards.
+    - Create a range of attributes slightly larger when creating a new character.
 
     ============================================================================
-
-    TWITTER API Information
-
-    Created a twitter account
-    Applied for a developer account ---
-      @Jackson64221071
-
-      Pswrd: TWITTER**************
-
-
-    Steps to
+    DAY 1: Thorough planning of each step / goals / design.
+    Created database.
+    Created models.
+    Connected ActiveRecord.
+    Completed API models for News and Movies.
+    ============================================================================
+    DAY 2: Tested / troubleshooted activerecord relationships.
+    Seeded database with items.
+    Created / destroyed columns.
+    Created User Sign in.
+    Created Adventurer.
+    Created Shop structure + random item list.
+    ============================================================================
+    DAY 3: Goals
+    -- finish shop.
+    -- finish battle.
+    -- Start to play aroud with overall game loop.
+    ============================================================================
+    DAY 4: Goals
+    -- Animations set. (including climbing the map)
+    -- All graphics / color created and made firm.
+    -- Tested the game 100 ways.
+    ============================================================================

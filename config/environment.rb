@@ -15,7 +15,11 @@ User.connection
 
 # title screen animations
 system("clear")
-game_title
+title_chomp_sequence
+sleep(4)
+
+shop_front_animation
+sleep(8)
 
 # user sign in
 main_user = User.main_menu_sign_in

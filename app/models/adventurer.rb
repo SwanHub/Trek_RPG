@@ -45,6 +45,9 @@ class Adventurer < ActiveRecord::Base
 
   def go_to_shop(level)
     prompt = TTY::Prompt.new
+
+    shop_front_animation
+    
     puts ""
     puts "Ye comes across a small town wit a single shoppe."
     puts ""
@@ -52,47 +55,62 @@ class Adventurer < ActiveRecord::Base
   #   # animation of shop, moving into frame.
   #   # "Welcome to the shop"
   #   # ---------------------
+      level_specific_items = Item.all.select{|item| item.item_level == level}
+      weapons = level_specific_items.select{|item| item.item_type == "Weapon"}
+      shield = level_specific_items.select{|item| item.item_type == "Shield"}
+      armor = level_specific_items.select{|item| item.item_type == "Armor"}
 
-  level_specific_items = Item.all.select{|item| item.item_level == level}
-  weapons = level_specific_items.select{|item| item.item_type == "Weapon"}
-  shield = level_specific_items.select{|item| item.item_type == "Shield"}
-  armor = level_specific_items.select{|item| item.item_type == "Armor"}
+      array_of_items = []
 
-  # armor.count (gives all the armor)
-  # binding.pry
+      armor_id_array = (0..(armor.count-1)).to_a
+      first_armor_id = armor_id_array.sample
+      armor_id_array.delete(first_armor_id)
+      second_armor_id = armor_id_array.sample
 
-  array_of_items = []
+      array_of_items << armor[first_armor_id].id
+      array_of_items << armor[second_armor_id].id
 
-  armor_id_array = (0..(armor.count-1)).to_a
-  first_armor_id = armor_id_array.sample
-  armor_id_array.delete(first_armor_id)
-  second_armor_id = armor_id_array.sample
+      shield_id_array = (0..(shield.count-1)).to_a
+      first_shield_id = shield_id_array.sample
+      shield_id_array.delete(first_shield_id)
+      second_shield_id = shield_id_array.sample
 
-  array_of_items << armor[first_armor_id].id
-  array_of_items << armor[second_armor_id].id
+      array_of_items << shield[first_shield_id].id
+      array_of_items << shield[second_shield_id].id
 
-  shield_id_array = (0..(shield.count-1)).to_a
-  first_shield_id = shield_id_array.sample
-  shield_id_array.delete(first_shield_id)
-  second_shield_id = shield_id_array.sample
+      weapon_id_array = (0..(weapons.count-1)).to_a
+      first_weapon_id = weapon_id_array.sample
+      weapon_id_array.delete(first_weapon_id)
+      second_weapon_id = weapon_id_array.sample
 
-  array_of_items << shield[first_shield_id].id
-  array_of_items << shield[second_shield_id].id
+      array_of_items << weapons[first_weapon_id].id
+      array_of_items << weapons[second_weapon_id].id
 
-  weapon_id_array = (0..(weapons.count-1)).to_a
-  first_weapon_id = weapon_id_array.sample
-  weapon_id_array.delete(first_weapon_id)
-  second_weapon_id = weapon_id_array.sample
+      array_of_items
 
-  array_of_items << weapons[first_weapon_id].id
-  array_of_items << weapons[second_weapon_id].id
+      item_1 = level_specific_items.find{|item| item.id == array_of_items[0]}
+      item_2 = level_specific_items.find{|item| item.id == array_of_items[1]}
+      item_3 = level_specific_items.find{|item| item.id == array_of_items[2]}
+      item_4 = level_specific_items.find{|item| item.id == array_of_items[3]}
+      item_5 = level_specific_items.find{|item| item.id == array_of_items[4]}
+      item_6 = level_specific_items.find{|item| item.id == array_of_items[5]}
 
-  array_of_items
+      item_check = prompt.select("Here are your items. Click one to see stats.:", ["#{item_1.name}", "#{item_2.name}", "#{item_3.name}", "#{item_4.name}", "#{item_5.name}", "#{item_6.name}"], active_color: :red)
 
-  first_item = level_specific_items.find{|item| item.id == array_of_items[0]}
-  second_item = level_specific_items.find{|item| item.id == array_of_items[1]}
+      if item_check == "#{item_1.name}"
+        display_item_stats(item_1)
+      elsif item_check == "#{item_2.name}"
+        display_item_stats(item_2)
+      elsif item_check == "#{item_3.name}"
+        display_item_stats(item_3)
+      elsif item_check == "#{item_4.name}"
+        display_item_stats(item_4)
+      elsif item_check == "#{item_5.name}"
+        display_item_stats(item_5)
+      elsif item_check == "#{item_6.name}"
+        display_item_stats(item_6)
+      end
 
-  prompt.select("Here are your items:", ["#{first_item.name}", "#{second_item.name}"], active_color: :red)
 
   binding.pry
   # Item.all
@@ -131,18 +149,19 @@ class Adventurer < ActiveRecord::Base
   #   # prompt: I hope you feel protected, now. Ready for the boss?.
   #   # return to the MAP.
   end
-    #                                      \
-    #                               x       O
-    #                                \     /
-    #                                 \   /
-    #                                  \ /
-    #                                   O
 
-    #   # > fight
-      # > shop
-    # ---------------------
-    # animation of house or woods, moving into frame.
-    # "Welcome to the shop"
-    # ---------------------
+
+  def display_item_stats(item)
+    puts "Remaining Coin: #{self.currency} $$$"
+    puts ""
+    puts "Item: #{item.name.upcase}"
+    puts "Cost: #{item.currency}"
+    puts ""
+    puts "Attack: #{item.atk}"
+    puts "Block: #{item.blk}"
+    puts "Health: #{item.hp}"
+    puts "Luck: #{item.luck}"
+    puts ""
+  end
 
 end

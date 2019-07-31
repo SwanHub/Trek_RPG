@@ -12,10 +12,12 @@ ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
 #
+
+# title screen animations
 system("clear")
 game_title
 
-
+# user sign in
 main_user = User.main_menu_sign_in
 
 puts ""
@@ -49,16 +51,24 @@ puts "#{user_response}"
     end
   end
 
-binding.pry
+#create new character, class type.
+adventurer = main_user.create_adventurer
 
-new_adventurer = main_user.create_adventurer
+# show stats, choose name.
+adventurer.beginning_stats
 
-puts ""
-puts ""
-# puts "You chose #{new_adventurer.class_type}!"
-puts ""
-puts ""
-puts ""
+# start level 1, fight or shop?
+# animation... LVL 1 (blinking)
+# animation... MAP (starting point)
+adventurer.fight_or_town
+# animation... MAP changes based on their choice.
+
+
+
+
+
+
+# Item.create(name: "Advil", item_type: "Advil", currency: 5)
 
 binding.pry
 

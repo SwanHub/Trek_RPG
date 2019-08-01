@@ -15,7 +15,7 @@ User.connection
 
 # title screen animations
 system("clear")
-start_animation
+# start_animation
 # user sign in
 main_user = User.main_menu_sign_in
 system("clear")
@@ -52,11 +52,11 @@ user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboar
        puts ""
        break
     elsif user_response == "Leaderboards"
-       puts "DISPLAY STATS".center(112)
-       leaderboards
-       break
+          puts "DISPLAY STATS".center(112)
+          leaderboards
+          break
     elsif user_response == "Leave"
-       exit
+          exit
     end
   end
 
@@ -79,22 +79,40 @@ adventurer.fight_or_town
 reverse_shop_animation
 system("clear")
 
+# trees animation
+
+
+# creates battles, creates enemy...
+enemy = adventurer.create_enemy(adventurer.current_level)
+
+
+enemy.enemy_appears
+sleep(2)
 battle_blink_animation
 
+adventurer.save_block
 
-# animation enemy appears.
-# if you don't fight back in time, enemy will fight you first.
-# USER THROWN INTO FIGHT
-# creates battles, creates enemy...
-new_enemy = adventurer.create_enemy(adventurer.current_level)
-new_enemy.move_prompt
-new_enemy.display_enemy_hp
+keep_playing = true
 
-  puts ""
-  puts ""
-  puts "GREAT BATTLE!".center(112)
-  puts ""
-  puts ""
+until keep_playing == false
+  enemy.move_prompt
+  enemy.attack(adventurer)
+  sleep(5)
+  keep_playing = enemy.check_for_victor(adventurer)
+  if keep_playing == true
+    enemy.defend(adventurer)
+    sleep(3)
+    keep_playing = enemy.check_for_victor(adventurer)
+  end
+end
+
+puts "you made it out the other side."
+adventurer.return_block_to_original
+puts ""
+puts ""
+puts "GREAT BATTLE!".center(112)
+puts ""
+puts ""
 
 adventurer.get_movie_and_news
 
@@ -107,9 +125,6 @@ puts "YOU LEFT THE SHOP".center(112)
 puts ""
 puts ""
 puts ""
-
-
-# animation... MAP changes based on their choice.
 
 
 binding.pry

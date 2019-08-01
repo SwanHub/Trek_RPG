@@ -5,23 +5,36 @@ class Adventurer < ActiveRecord::Base
   @@prompt = TTY::Prompt.new
 
   def fight_or_town
-      first_action = @@prompt.select("Where would you like to go? (10 seconds to choose)", ["Fight", "Town"], active_color: :red)
+      first_action = @@prompt.select("Where would you like to go? (10 seconds to choose)", ["Explore", "Town"], active_color: :red)
 
-      if first_action == "Fight"
+      if first_action == "Explore"
         yes_or_no = are_you_sure
         if yes_or_no == "Yes"
           nil
         else
-          #return to map
           fight_or_town
         end
       elsif first_action == "Town"
         yes_or_no = are_you_sure
         if yes_or_no == "Yes"
+          system("clear")
           puts ""
-          puts "Ye comes across a small town wit a single shoppe."
           puts ""
-          # shop_front_animation
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          puts "Ye comes across a small town wit a single shoppe.".center(112)
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          puts ""
+          sleep(5)
+          shop_front_animation
           sleep(3)
           self.go_to_shop(self.current_level)
         else
@@ -36,6 +49,7 @@ class Adventurer < ActiveRecord::Base
   end
 
   def go_to_shop(level)
+      system("clear")
       # gather stats
       item_ids = array_of_items(level).flatten
       item_1 = item_1(level, item_ids)
@@ -69,6 +83,7 @@ class Adventurer < ActiveRecord::Base
       item_per_level(level).select{|item| item.item_type == "Armor"}
   end
 
+  # better names # change the variable type.
   def get_two_items_from(item_class)
       array = []
       id_array = (0..(item_class.count-1)).to_a
@@ -118,7 +133,6 @@ class Adventurer < ActiveRecord::Base
   end
 
     def shop_item_menu(one, two, three, four, five, six, health)
-      puts "Sheckles: #{self.currency} "
       display_stats
       # binding.pry
       item_check = @@prompt.select("Here are your items. Click for stats. (scroll for more):", ["#{one.name} - #{one.item_type} - $#{one.currency}",
@@ -135,8 +149,8 @@ class Adventurer < ActiveRecord::Base
 
       case choice
       when "#{one.name} - #{one.item_type} - $#{one.currency}"
-      display_item_stats(one)
-      buy_or_return(one)
+          display_item_stats(one)
+          buy_or_return(one)
 
       when "#{two.name} - #{two.item_type} - $#{two.currency}"
       display_item_stats(two)
@@ -179,15 +193,12 @@ class Adventurer < ActiveRecord::Base
       if option == "Buy item" && (self.currency - item.currency) >= 0
 
          if !self.item_id
-            self.update(currency: self.currency - item.currency)
             self.update(item_id: item.id)
 
          elsif !self.item_2_id
-               self.update(currency: self.currency - item.currency)
                self.update(item_2_id: item.id)
 
          elsif !self.item_3_id
-               self.update(currency: self.currency - item.currency)
                self.update(item_3_id: item.id)
 
          else
@@ -199,18 +210,16 @@ class Adventurer < ActiveRecord::Base
 
                case
                when "#{item_one.name}"
-               self.update(currency: self.currency - item.currency)
                self.update(item_id: item.id)
 
                when "#{item_two.name}"
-               self.update(currency: self.currency - item.currency)
                self.update(item_2_id: item.id)
 
                when "#{item_three.name}"
-               self.update(currency: self.currency - item.currency)
                self.update(item_3_id: item.id)
                end
           end
+          self.update(currency: self.currency - item.currency)
           self.update(atk: self.atk + item.atk)
           self.update(blk: self.blk + item.blk)
           self.update(hp: self.hp + item.hp)
@@ -219,6 +228,7 @@ class Adventurer < ActiveRecord::Base
       elsif option == "Buy item" && (self.currency - item.currency) < 0
         puts "You cant afford this, fool!"
       end
+      system("clear")
       false
     end
 
@@ -266,7 +276,10 @@ class Adventurer < ActiveRecord::Base
               end
             end
         end
-      puts "You made it out the other end"
+        binding.pry
+        self.update(atk: self.atk + 1, blk: self.blk + 1, hp: self.hp + 1)
+      puts "Your stats regenerated slightly..."
+      display_stats
   end
 
 
@@ -294,7 +307,6 @@ class Adventurer < ActiveRecord::Base
     puts ""
     puts ""
     puts ""
-    puts "Backstory: #{self.name} #{self.backstory}".center(112)
     puts ""
     puts ""
     puts "#{self.name}'s stats:".center(112)
@@ -303,8 +315,9 @@ class Adventurer < ActiveRecord::Base
 
   def display_stats
     puts ""
-    puts "Currency: #{self.currency}".center(112)
-    puts "~~~~~~~~~~~~".center(112)
+    puts "Sheckles : $#{self.currency}".center(112)
+    puts ""
+    puts ""
     display_fight_stats
     puts ""
   end
@@ -321,16 +334,16 @@ class Adventurer < ActiveRecord::Base
   end
 
   def your_stats_with_item(item)
-    puts "Attack: #{self.atk + item.atk}"
-    puts "Block: #{self.blk + item.blk}"
-    puts "Health: #{self.hp + item.hp}"
-    puts "Luck: #{self.luck + item.luck}"
+    puts "Attack: #{self.atk + item.atk}".center(112)
+    puts "Block: #{self.blk + item.blk}".center(112)
+    puts "Health: #{self.hp + item.hp}".center(112)
+    puts "Luck: #{self.luck + item.luck}".center(112)
   end
 
   def display_item_stats(item)
-    puts "Remaining Sheckles: #{self.currency}"
+    puts "Sheckles: $#{self.currency}".center(112)
     puts ""
-    puts "Updated stats with item"
+    puts "Updated stats with item".center(112)
     your_stats_with_item(item)
     puts ""
     puts ""
@@ -342,6 +355,15 @@ class Adventurer < ActiveRecord::Base
     puts "Health: #{item.hp}"
     puts "Luck: #{item.luck}"
     puts ""
+  end
+
+  def save_block
+    @saved_block = []
+    @saved_block << self.blk
+  end
+
+  def return_block_to_original
+    self.update(blk: @saved_block[0])
   end
 
 end

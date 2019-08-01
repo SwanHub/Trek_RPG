@@ -30,12 +30,72 @@ class Enemy < ActiveRecord::Base
     def attack(adventurer)
         dmg = adventurer.atk - self.blk
         if dmg > 0
-          dmg - self.hp
+          self.update(hp: self.hp - dmg)
+          self.update(blk: 0)
+          puts "You dealt #{dmg} damage!"
+        elsif dmg <= 0
+          self.update(blk: self.blk - adventurer.atk)
+          puts "#{self.name}'s block was too strong! They have #{self.blk} block left!"
+        end
+        puts "#{self.name} has #{self.hp} HP left!"
+    end
+
+    def defend(adventurer)
+      dmg = self.atk - adventurer.blk
+      if dmg > 0
+        adventurer.update(hp: adventurer.hp - dmg)
+        adventurer.update(blk: 0)
+        puts "You took #{dmg} damage!"
+      elsif dmg <= 0
+        adventurer.update(blk: adventurer.blk - self.atk)
+        puts "#{self.name} did not pierce your block!"
+      end
+      puts "#{adventurer.name} has #{adventurer.hp} HP left!"
+    end
+
+    def check_for_victor(adventurer)
+        if self.hp <= 0
+          puts "You've proved your skills in battle!!"
+          false
+        elsif adventurer.hp <= 0
+          puts "You have succumbed to the enemy."
+          false
+        else
+          true
         end
     end
 
-    def defend
-
+    def enemy_appears
+        system("clear")
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts "You were ambushed by #{self.name}!!!!!!!".center(112)
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
     end
 
 

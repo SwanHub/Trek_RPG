@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 23) do
+ActiveRecord::Schema.define(version: 24) do
 
   create_table "adventurers", force: :cascade do |t|
     t.string "name"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 23) do
     t.integer "item_3_id"
     t.string "class_type"
     t.integer "item_id"
-    t.text "backstory"
     t.integer "base_atk"
     t.integer "base_blk"
     t.integer "base_hp"

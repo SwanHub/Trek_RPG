@@ -2,6 +2,7 @@ require 'sinatra/activerecord'
 require 'require_all'
 require 'tty-prompt'
 require 'paint'
+require 'rest-client'
 require_all './app'
 require 'pry'
 
@@ -9,24 +10,22 @@ require 'pry'
 connection = ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/trek.db')
 # eliminates message logging to terminal.
 ActiveRecord::Base.logger = nil
-prompt = TTY::Prompt.new
+@@prompt = TTY::Prompt.new
 User.connection
 
 # title screen animations
 system("clear")
-start_animation
+# start_animation
 
 # user sign in
 main_user = User.main_menu_sign_in
-
-
 
 puts ""
 puts ""
 puts "Let's begin #{main_user.name}!"
 puts ""
 puts ""
-user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboards", "Leave"], active_color: :cyan)
+user_response = @@prompt.select("Welcome, your options:", ["New Trek", "Leaderboards", "Leave"], active_color: :cyan)
 puts "#{user_response}"
   loop do
     if user_response == "New Trek"

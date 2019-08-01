@@ -1,7 +1,7 @@
 class Enemy < ActiveRecord::Base
     belongs_to :item
     belongs_to :adventurer
-
+    @@prompt = TTY::Prompt.new
     @@moves = ["Slam", "Pocket Sand", "Right Hook", "Left Hook", "Crop Dust", "Punch", "Jab", "Slice", "Crunch", "Headbutt", ]
 
     def create_boss
@@ -23,9 +23,8 @@ class Enemy < ActiveRecord::Base
     end
 
     def move_prompt
-      prompt = TTY::Prompt.new
       moves = @@moves.sample(4)
-      prompt.select("Choose your attack:", [moves[0], moves[1], moves[2], moves[3]])
+      @@prompt.select("Choose your attack:", [moves[0], moves[1], moves[2], moves[3]])
     end
 
     def attack(adventurer)

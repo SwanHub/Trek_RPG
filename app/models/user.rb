@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
        self.adventurers << new_adventurer
 
     elsif adventurer_choice == "Street Rat"
-          new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [8, 9].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [2, 3].sample, currency: [1, 2].sample)
+          new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [14, 15, 16].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [2, 3].sample, currency: [1, 2].sample)
           new_adventurer.update(backstory: " was born in a trashcan. Right arm is longer than left. By several inches.")
           self.adventurers << new_adventurer
 

@@ -1,5 +1,5 @@
 class Adventurer < ActiveRecord::Base
-  has_many :battles
+  has_many :enemies
   belongs_to :user
   belongs_to :item
 
@@ -236,7 +236,7 @@ class Adventurer < ActiveRecord::Base
             self.update(atk: self.atk + item.atk)
             self.update(blk: self.blk + item.blk)
             self.update(hp: self.hp + item.hp)
-            self.update(atk: self.luck + item.luck)
+            self.update(luck: self.luck + item.luck)
 
          elsif !self.item_2_id
               self.update(currency: self.currency - item.currency)
@@ -244,7 +244,7 @@ class Adventurer < ActiveRecord::Base
               self.update(atk: self.atk + item.atk)
               self.update(blk: self.blk + item.blk)
               self.update(hp: self.hp + item.hp)
-              self.update(atk: self.luck + item.luck)
+              self.update(luck: self.luck + item.luck)
 
          elsif !self.item_3_id
               self.update(currency: self.currency - item.currency)
@@ -252,7 +252,7 @@ class Adventurer < ActiveRecord::Base
               self.update(atk: self.atk + item.atk)
               self.update(blk: self.blk + item.blk)
               self.update(hp: self.hp + item.hp)
-              self.update(atk: self.luck + item.luck)
+              self.update(luck: self.luck + item.luck)
 
          else
               drop_one = Item.find(self.item_id)
@@ -267,21 +267,21 @@ class Adventurer < ActiveRecord::Base
                     self.update(atk: self.atk + item.atk)
                     self.update(blk: self.blk + item.blk)
                     self.update(hp: self.hp + item.hp)
-                    self.update(atk: self.luck + item.luck)
+                    self.update(luck: self.luck + item.luck)
                 elsif item_choice == "#{drop_two.name}"
                     self.update(currency: self.currency - item.currency)
                     self.update(item_2_id: item.id)
                     self.update(atk: self.atk + item.atk)
                     self.update(blk: self.blk + item.blk)
                     self.update(hp: self.hp + item.hp)
-                    self.update(atk: self.luck + item.luck)
+                    self.update(luck: self.luck + item.luck)
                 elsif item_choice == "#{drop_three.name}"
                     self.update(currency: self.currency - item.currency)
                     self.update(item_3_id: item.id)
                     self.update(atk: self.atk + item.atk)
                     self.update(blk: self.blk + item.blk)
                     self.update(hp: self.hp + item.hp)
-                    self.update(atk: self.luck + item.luck)
+                    self.update(luck: self.luck + item.luck)
                 end
           end
 
@@ -331,11 +331,21 @@ class Adventurer < ActiveRecord::Base
     puts "Luck: #{self.luck + item.luck}"
   end
 
-  def create_battle(level)
-      new_battle = Battle.create
-      new_enemy = new_battle.create_enemy(level)
-      new_battle.update(enemy_id: new_enemy.id)
-      self.battles << new_battle
+  def create_enemy(level)
+
+    if level == 1
+      new_enemy = Enemy.create(boss?: false, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [9, 10, 11, 12].sample, item_id: rand(1..16))
+
+    elsif level == 2
+      new_enemy = Enemy.create(boss?: false, atk: [7, 8, 9].sample, blk: [7, 8, 9].sample, hp: [7, 8, 9].sample, currency: [13, 14, 15, 16].sample, item_id: rand(17..32))
+
+    end
+
+    new_enemy.update(name: Getdata.get_character)
+    item = Item.find(new_enemy.item_id)
+    new_enemy.update(atk: (new_enemy.atk + item.atk), blk: (new_enemy.blk + item.blk), hp: (new_enemy.hp + item.hp))
+    self.enemies << new_enemy
+    new_enemy
   end
 
 end

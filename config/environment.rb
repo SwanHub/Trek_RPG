@@ -71,13 +71,13 @@ adventurer.fight_or_town
 # if you don't fight back in time, enemy will fight you first.
 # USER THROWN INTO FIGHT
 # creates battles, creates enemy...
+new_enemy = adventurer.create_enemy(adventurer.current_level)
+new_enemy.move_prompt
+binding.pry
+new_enemy.display_enemy_hp
 
-adventurer.create_battle(adventurer.current_level)
 
 # prompt to fight...
-
-binding.pry
-
 
 
 # woods animation .........

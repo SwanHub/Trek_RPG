@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
       case adventurer_choice
         when "Juggernaut"
         new_adventurer = Adventurer.create(class_type: "Juggernaut", atk: [2, 3].sample, blk: [5, 6, 7].sample, hp: [5, 6, 7].sample, luck: [3, 4, 5].sample, currency: [3, 4, 5].sample)
-        new_adventurer.update(backstory: "Born in a cyclone.")
+        new_adventurer.update(backstory: "was born in a cyclone.")
 
         when "Street Rat"
         new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [14, 15, 16].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [2, 3].sample, currency: [1, 2].sample)
@@ -28,15 +28,15 @@ class User < ActiveRecord::Base
 
         when "Vampire"
         new_adventurer = Adventurer.create(class_type: "Vampire", atk: [3, 4, 5].sample, blk: [3, 4, 5].sample, hp: [3, 4, 5].sample, luck: [3, 4, 5].sample, currency: [3, 4, 5].sample)
-        new_adventurer.update(backstory: "Born in a coffin.")
+        new_adventurer.update(backstory: " was born in a coffin.")
 
         when "Tax Collector"
         new_adventurer = Adventurer.create(class_type: "Tax Collector", atk: [1, 2].sample, blk: [1, 2].sample, hp: [1, 2].sample, luck: [1, 2].sample, currency: [14, 15, 16].sample)
-        new_adventurer.update(backstory: "Born in a vat of money.")
+        new_adventurer.update(backstory: " was born in a vat of money.")
 
         when "Gambler"
         new_adventurer = Adventurer.create(class_type: "Gambler", atk: [2, 3].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [5, 6, 7].sample, currency: [5, 6, 7].sample)
-        new_adventurer.update(backstory: "Born in a casino.")
+        new_adventurer.update(backstory: " was born in a casino.")
       end
 
       self.adventurers << new_adventurer

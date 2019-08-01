@@ -119,7 +119,7 @@ class Adventurer < ActiveRecord::Base
 
     def shop_item_menu(one, two, three, four, five, six, health)
       puts "Sheckles: #{self.currency} "
-      display_adventurer_stats
+      display_stats
       # binding.pry
       item_check = @@prompt.select("Here are your items. Click for stats. (scroll for more):", ["#{one.name} - #{one.item_type} - $#{one.currency}",
         "#{two.name} - #{two.item_type} - $#{two.currency}",
@@ -175,9 +175,6 @@ class Adventurer < ActiveRecord::Base
     end
 
     def buy_or_return(item)
-      item_one = Item.find(self.item_id)
-      item_two = Item.find(self.item_2_id)
-      item_three = Item.find(self.item_3_id)
       option = @@prompt.select("Do you want to buy this item?", ["Buy item", "Nevermind"])
       if option == "Buy item" && (self.currency - item.currency) >= 0
 
@@ -196,6 +193,9 @@ class Adventurer < ActiveRecord::Base
          else
                item_choice = @@prompt.select("Your hands are full, fool! Select an item to drop.",
                ["#{item_one.name}", "#{item_two.name}", "#{item_three.name}", "Nevermind"])
+               item_one = Item.find(self.item_id)
+               item_two = Item.find(self.item_2_id)
+               item_three = Item.find(self.item_3_id)
 
                case
                when "#{item_one.name}"
@@ -226,7 +226,6 @@ class Adventurer < ActiveRecord::Base
 
     if level == 1
       new_enemy = Enemy.create(boss?: false, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [9, 10, 11, 12].sample, item_id: rand(1..16))
-
     elsif level == 2
       new_enemy = Enemy.create(boss?: false, atk: [7, 8, 9].sample, blk: [7, 8, 9].sample, hp: [7, 8, 9].sample, currency: [13, 14, 15, 16].sample, item_id: rand(17..32))
     end
@@ -239,26 +238,93 @@ class Adventurer < ActiveRecord::Base
   end
 
 
+
+  def get_movie_and_news
+      choice =  @@prompt.select("You're tired. Take a break and heal?", ["Sounds awesome.", "No I'm feeling snappy."])
+        if choice == "Sounds awesome."
+           movie_or_news = @@prompt.select("Watch a movie or read the news?", ["Watch Movie / TV", "Read News", "Ready to rock."])
+           if movie_or_news == "Watch Movie / TV"
+              loop do
+                movie = @@prompt.ask("Search movie / show:")
+                puts ""
+                Getdata.get_movie(movie)
+                puts ""
+                puts ""
+                watch = @@prompt.select("Is that the one?", ["Yes, thanks Jarvis.", "No, search another movie."])
+                if watch == "Yes, thanks Jarvis."
+                  break
+                end
+              end
+            elsif movie_or_news == "Read News"
+              loop do
+                article_type = @@prompt.select("Scroll publication or headlines:", ["Publication", "US Headlines", "Business Headlines", "Tech News", "Feeling refreshed"])
+                if article_type == "Feeling refreshed"
+                  break
+                else
+                  Getdata.get_article_by(article_type)
+                end
+              end
+            end
+        end
+      puts "You made it out the other end"
+  end
+
+
+
   ## STATS ======================================================
   def beginning_stats
+    system("clear")
     puts ""
     puts ""
-    puts "You chose #{self.class_type}!"
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "You chose #{self.class_type}!".center(112)
+    puts "~~~~~~~~~~~~".center(112)
+    puts ""
+    puts ""
+    puts ""
     puts ""
     puts ""
     adventurer_name = @@prompt.ask("What is your adventurer's name?", active_color: :red)
     self.update(name: adventurer_name)
-    puts "Backstory: #{self.name} #{self.backstory}"
+    system("clear")
     puts ""
-    puts "#{self.name}'s stats:"
+    puts ""
+    puts ""
+    puts ""
+    puts "Backstory: #{self.name} #{self.backstory}".center(112)
+    puts ""
+    puts ""
+    puts "#{self.name}'s stats:".center(112)
     display_stats
   end
 
   def display_stats
     puts ""
+    puts "Currency: #{self.currency}".center(112)
+    puts "~~~~~~~~~~~~".center(112)
     display_fight_stats
-    puts "Currency: #{self.currency}"
     puts ""
+  end
+
+  def display_fight_stats
+    puts "Attack: #{self.atk}".center(112)
+    puts "~~~~~~~~~~~~".center(112)
+    puts "Block: #{self.blk}".center(112)
+    puts "~~~~~~~~~~~~".center(112)
+    puts "Health: #{self.hp}".center(112)
+    puts "~~~~~~~~~~~~".center(112)
+    puts "Luck: #{self.luck}".center(112)
+    puts ""
+  end
+
+  def your_stats_with_item(item)
+    puts "Attack: #{self.atk + item.atk}"
+    puts "Block: #{self.blk + item.blk}"
+    puts "Health: #{self.hp + item.hp}"
+    puts "Luck: #{self.luck + item.luck}"
   end
 
   def display_item_stats(item)
@@ -276,20 +342,6 @@ class Adventurer < ActiveRecord::Base
     puts "Health: #{item.hp}"
     puts "Luck: #{item.luck}"
     puts ""
-  end
-
-  def display_fight_stats
-    puts "Attack: #{self.atk}"
-    puts "Block: #{self.blk}"
-    puts "Health: #{self.hp}"
-    puts "Luck: #{self.luck}"
-  end
-
-  def your_stats_with_item(item)
-    puts "Attack: #{self.atk + item.atk}"
-    puts "Block: #{self.blk + item.blk}"
-    puts "Health: #{self.hp + item.hp}"
-    puts "Luck: #{self.luck + item.luck}"
   end
 
 end

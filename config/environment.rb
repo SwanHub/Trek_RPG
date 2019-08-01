@@ -11,18 +11,15 @@ connection = ActiveRecord::Base.establish_connection(adapter: 'sqlite3', databas
 ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
-#
 
 # title screen animations
 system("clear")
-title_chomp_sequence
-sleep(4)
-
-shop_front_animation
-sleep(8)
+start_animation
 
 # user sign in
 main_user = User.main_menu_sign_in
+
+
 
 puts ""
 puts ""
@@ -58,21 +55,44 @@ puts "#{user_response}"
 #create new character, class type.
 adventurer = main_user.create_adventurer
 
+
 # show stats, choose name.
 adventurer.beginning_stats
+sleep(3)
+system("clear")
 
 # start level 1, fight or shop?
-# animation... LVL 1 (blinking)
+level_one_logo
+sleep(2)
 # animation... MAP (starting point)
 adventurer.fight_or_town
+# animation... MAP (starting point)
+# animation enemy appears.
+# if you don't fight back in time, enemy will fight you first.
+# USER THROWN INTO FIGHT
+# creates battles, creates enemy...
+
+adventurer.create_battle(adventurer.current_level)
+
+# prompt to fight...
+
+binding.pry
+
+
+
+# woods animation .........
+
+
+puts ""
+puts ""
+puts "YOU LEFT THE SHOP"
+puts ""
+puts ""
+puts ""
+
+
 # animation... MAP changes based on their choice.
 
-
-
-
-
-
-# Item.create(name: "Advil", item_type: "Advil", currency: 5)
 
 binding.pry
 

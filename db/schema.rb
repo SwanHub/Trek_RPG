@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 18) do
+ActiveRecord::Schema.define(version: 22) do
 
   create_table "adventurers", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,12 @@ ActiveRecord::Schema.define(version: 18) do
     t.string "class_type"
     t.integer "item_id"
     t.text "backstory"
+    t.integer "base_atk"
+    t.integer "base_blk"
+    t.integer "base_hp"
+    t.integer "base_luck"
+    t.integer "base_currency"
+    t.integer "current_level", default: 1
   end
 
   create_table "battles", force: :cascade do |t|
@@ -39,6 +45,8 @@ ActiveRecord::Schema.define(version: 18) do
     t.integer "hp"
     t.integer "currency"
     t.integer "item_id"
+    t.integer "enemy_level"
+    t.string "name"
   end
 
   create_table "items", force: :cascade do |t|

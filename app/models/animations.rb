@@ -129,20 +129,8 @@ def title_blink_yellow
   puts ""
   puts ""
 end
-loop do
-      title_blink_green
-      sleep(1)
-      title_blink_red
-      sleep(1)
-      title_blink_blue
-      sleep(1)
-      title_blink_yellow
-      sleep(1)
-end
 
 ############################ currently workshopping
-
-
 
 def level_one_logo
     puts ""
@@ -195,6 +183,26 @@ def level_four_logo
   puts ""
   puts ""
 
+end
+
+def start_animation
+  trek_small_upper_left
+  sleep(1)
+  trek_small_lower_right
+  sleep(1)
+  trek_small_lower_left
+  sleep(1)
+  trek_small_upper_right
+  sleep(1)
+  title_chomp_sequence
+  title_blink_green
+  sleep(1)
+  title_blink_red
+  sleep(1)
+  title_blink_blue
+  sleep(1)
+  title_blink_yellow
+  sleep(1)
 end
 
 
@@ -1450,3 +1458,32 @@ def trek_small_upper_right
   puts ""
   puts ""
 end
+
+                #                                                     .
+                #                                          .         ;
+                #            .              .              ;%     ;;
+                #            ,           ,                :;%  %;
+                #           :         ;                   :;%;'     .,
+                # ,.        %;     %;            ;        %;'    ,;
+                #    ;       ;%;  %%;        ,     %;    ;%;    ,%'
+                #     %;       %;%;      ,  ;       %;  ;%;   ,%;'
+                #       ;%;      %;        ;%;        % ;%;  ,%;'
+                #       `%;.     ;%;     %;'         `;%%;.%;'
+                #         `:;%.    ;%%. %@;        %; ;@%;%'
+                #             `:%;.  :;bd%;          %;@%;'
+                #               `@%:.  :;%.         ;@@%;'
+                #                 `@%.  `;@%.      ;@@%;
+                #                   `@%%. `@%%    ;@@%;
+                #                     ;@%. :@%%  %@@%;
+                #                       %@bd%%%bd%%:;
+                #                         #@%%%%%:;;
+                #                         %@@%%%::;
+                #                         %@@@%(o);  . '
+                #                         %@@@o%;:(.,'
+                #                     `.. %@@@o%::;
+                #                        `)@@@o%::;
+                #                         %@@(o)::;
+                #                        .%@@@@%::;
+                #                        ;%@@@@%::;.
+                #                       ;%@@@@%%:;;;.
+                #                   ...;%@@@@@%%:;;;;,..

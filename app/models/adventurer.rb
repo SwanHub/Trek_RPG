@@ -37,15 +37,17 @@ class Adventurer < ActiveRecord::Base
           shop_front_animation
           sleep(3)
           self.go_to_shop(self.current_level)
+          reverse_shop_animation
+          system("clear")
         else
-          #return to map
           fight_or_town
         end
       end
   end
 
   def are_you_sure
-      response = @@prompt.select("Are you sure?", ["Yes", "No"], active_color: :red)
+      puts ""
+      response = @@prompt.select(  "Are you sure?", ["Yes", "No"], active_color: :red)
   end
 
   def go_to_shop(level)
@@ -287,6 +289,9 @@ class Adventurer < ActiveRecord::Base
   ## STATS ======================================================
   def beginning_stats
     system("clear")
+    display_adventurer_ascii(self.class_type)
+    sleep(1)
+    system("clear")
     puts ""
     puts ""
     puts ""
@@ -312,6 +317,22 @@ class Adventurer < ActiveRecord::Base
     puts "#{self.name}'s stats:".center(112)
     display_stats
   end
+  
+  def display_adventurer_ascii(class_type)
+      case class_type
+      when "Juggernaut"
+          juggernaut()
+      when "Street Rat"
+          street_rat()
+      when "Warrior"
+          warrior()
+      when "Tax Collector"
+          tax_collector()
+      when "Con Artist"
+          con_artist()
+      end
+  end
+
 
   def display_stats
     puts ""
@@ -364,6 +385,12 @@ class Adventurer < ActiveRecord::Base
 
   def return_block_to_original
     self.update(blk: @saved_block[0])
+  end
+
+  def display_hp
+    puts "Block remaining: #{self.blk}"
+    puts "HP remaining: #{self.hp}"
+    puts ""
   end
 
 end

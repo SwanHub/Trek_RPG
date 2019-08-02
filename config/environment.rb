@@ -13,6 +13,7 @@ ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
 
+
 # title screen animations
 system("clear")
 # start_animation
@@ -63,7 +64,6 @@ user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboar
 #create new character, class type.
 adventurer = main_user.create_adventurer
 
-
 # show stats, choose name.
 adventurer.beginning_stats
 sleep(6)
@@ -75,45 +75,48 @@ sleep(2)
 # animation... MAP (starting point)
 adventurer.fight_or_town
 
-# animation... MAP (starting point)
-reverse_shop_animation
 system("clear")
-
+castle
+sleep(4)
 # trees animation
-
 
 # creates battles, creates enemy...
 enemy = adventurer.create_enemy(adventurer.current_level)
 
 
-enemy.enemy_appears
+enemy.enemy_text_appears
 sleep(2)
 battle_blink_animation
+villain_number = rand(0..5)
+system("clear")
+villains[villain_number].call
+sleep(5)
 
 adventurer.save_block
 
 keep_playing = true
 
 until keep_playing == false
+  system("clear")
+  villains[villain_number].call
+  adventurer.display_hp
   enemy.move_prompt
   enemy.attack(adventurer)
   sleep(5)
-  keep_playing = enemy.check_for_victor(adventurer)
+  keep_playing = enemy.check_for_victor(adventurer, villain_number)
   if keep_playing == true
     enemy.defend(adventurer)
     sleep(3)
-    keep_playing = enemy.check_for_victor(adventurer)
+    keep_playing = enemy.check_for_victor(adventurer, villain_number)
   end
 end
 
-puts "you made it out the other side."
 adventurer.return_block_to_original
 puts ""
 puts ""
-puts "GREAT BATTLE!".center(112)
 puts ""
 puts ""
-
+puts ""
 adventurer.get_movie_and_news
 
 # prompt to fight...

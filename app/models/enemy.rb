@@ -65,7 +65,7 @@ class Enemy < ActiveRecord::Base
 
     def check_for_victor(adventurer, villain_number)
         if self.hp <= 0
-
+          adventurer.update(result: "win")
           if self.boss?
             system("clear")
             you_win

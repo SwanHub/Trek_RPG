@@ -9,8 +9,6 @@ class User < ActiveRecord::Base
     puts "Sign in or create new account below: "
     username_input = @@prompt.ask("username:", active_color: :red)
     User.find_or_create_by(name: username_input)
-    # * continue your trek (if paused)
-    # (see leaderboards)
   end
 
   def create_adventurer
@@ -55,20 +53,56 @@ class User < ActiveRecord::Base
 
   ## LEADERBOARDS =================================================
 
-  def user_stats
-    # treks completed
-    # total successful treks
-    # total unsuccessulf treks
-    # top 5 users in terms of successful treks. and their character?
-    # and their items?
+  def self.leaderboard
+    puts "LEADERBOARD".center(112)
+    puts ""
+    puts ""
+    puts "Total Treks completed: #{self.treks_completed}".center(112)
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~".center(112)
+    puts "Total Successful Treks: #{self.total_successful_treks}".center(112)
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~".center(112)
+    puts "Total Losing Treks: #{self.total_losing_treks}".center(112)
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~".center(112)
+    puts "Most Winning Users:".center(112)
+    self.top_five_users
+    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~".center(112)
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+  end
+
+  def self.treks_completed
+    total_adventurers = self.all.map{|user| user.adventurers.count}.sum
   end
 
   def self.all_adventurers
-    binding.pry
-    self.characters
-    # a list of all adventurers created and who played with them.
+    self.all.map{|user| user.adventurers }.flatten
   end
 
+  def self.total_losing_treks
+    all_adventurers.select{|adventurer| adventurer.result == "lose"}.count
+  end
+
+  def self.total_successful_treks
+    all_adventurers.select{|adventurer| adventurer.result == "win"}.count
+  end
+
+  def single_user_win_count
+    adventurers.all.select{|adventurers| adventurers.result == "win"}.count
+  end
+
+  def self.top_five_users
+    all_users_compiled_with_wins = self.all.map{|user| {username: user.name, win_count: user.single_user_win_count}}
+    all_users_wins = all_users_compiled_with_wins.sort_by{|user| user[:win_count]}
+    puts "#{all_users_wins[-1][:username]}: #{all_users_wins[-1][:win_count]} wins".center(112)
+    puts "#{all_users_wins[-2][:username]}: #{all_users_wins[-2][:win_count]} wins".center(112)
+    puts "#{all_users_wins[-3][:username]}: #{all_users_wins[-3][:win_count]} wins".center(112)
+    puts "#{all_users_wins[-4][:username]}: #{all_users_wins[-4][:win_count]} wins".center(112)
+    puts "#{all_users_wins[-5][:username]}: #{all_users_wins[-5][:win_count]} wins".center(112)
+  end
 
   ## MUSIC ======================================================
 
@@ -111,11 +145,6 @@ class User < ActiveRecord::Base
  def self.news_music
    pid = fork{exec 'afplay', "./news.mp3"}
  end
-
- # def self.you_win
- #   pid = fork{exec 'afplay', "./youwin.mp3"}
- # end
-
 
  def self.stop_music
    pid = fork{exec 'killall', "afplay"}

@@ -36,8 +36,9 @@ puts ""
 puts ""
 puts ""
 puts ""
-user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboards", "Leave"], active_color: :cyan)
+
   loop do
+    user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboards", "Leave"], active_color: :cyan)
     if user_response == "New Trek"
        system("clear")
        puts ""
@@ -55,9 +56,8 @@ user_response = prompt.select("Welcome, your options:", ["New Trek", "Leaderboar
        puts ""
        break
     elsif user_response == "Leaderboards"
-          puts "DISPLAY STATS".center(112)
-          leaderboards
-          break
+          system("clear")
+          User.leaderboard
     elsif user_response == "Leave"
           exit
     end

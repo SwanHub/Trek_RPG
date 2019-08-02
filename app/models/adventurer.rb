@@ -240,9 +240,7 @@ class Adventurer < ActiveRecord::Base
   def create_enemy(level)
 
     if level == 1
-      new_enemy = Enemy.create(boss?: false, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [13, 14, 15, 16].sample, item_id: rand(1..16))
-    # elsif level == 2
-    #   new_enemy = Enemy.create(boss?: false, atk: [7, 8, 9].sample, blk: [7, 8, 9].sample, hp: [7, 8, 9].sample, currency: [13, 14, 15, 16].sample, item_id: rand(17..32))
+      new_enemy = Enemy.create(boss?: false, atk: [2, 3].sample, blk: [4, 5, 6].sample, hp: [12, 13, 14, 15].sample, currency: [13, 14, 15, 16].sample, item_id: rand(1..16))
     end
 
     new_enemy.update(name: Getdata.get_character)
@@ -253,7 +251,7 @@ class Adventurer < ActiveRecord::Base
   end
 
   def create_boss
-      new_boss = Enemy.create(boss?: true, atk: [7].sample, blk: [12, 13, 14, 15].sample, hp: [12, 13, 14, 15].sample, currency: 100)
+      new_boss = Enemy.create(boss?: true, atk: [10, 11, 12, 13].sample, blk: [12, 13, 14, 15].sample, hp: [12, 13, 14, 15].sample, currency: 100)
       new_boss.update(name: Getdata.get_character)
       new_boss
   end

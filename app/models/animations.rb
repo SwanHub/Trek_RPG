@@ -156,9 +156,6 @@ def level_one_logo
     puts ""
     puts ""
 end
-
-
-
 def level_two_logo
     puts ""
     puts ""
@@ -233,8 +230,6 @@ def start_animation
   title_blink_yellow
   sleep(1)
 end
-
-
 
 def game_title
     puts ""

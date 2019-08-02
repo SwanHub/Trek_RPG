@@ -196,5 +196,3 @@ until keep_playing == false
 end
 
 adventurer.to_be_continued
-
-binding.pry

@@ -12,10 +12,13 @@ connection = ActiveRecord::Base.establish_connection(adapter: 'sqlite3', databas
 ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
+User.stop_music
 
+intro_animation_sequence
 # title screen animations
 system("clear")
-# start_animation
+User.starting_music
+start_animation
 # user sign in
 main_user = User.main_menu_sign_in
 system("clear")
@@ -69,6 +72,8 @@ sleep(6)
 system("clear")
 
 # start level 1, fight or shop?
+User.stop_music
+User.exploration_music
 level_one_logo
 sleep(2)
 # animation... MAP (starting point)
@@ -82,7 +87,10 @@ enemy = adventurer.create_enemy(adventurer.current_level)
 
 enemy.enemy_text_appears
 sleep(2)
-# battle_blink_animation
+User.stop_music
+User.ambush_music
+battle_blink_animation
+
 villain_number = rand(0..5)
 system("clear")
 villains[villain_number].call
@@ -111,6 +119,8 @@ adventurer.return_block_to_original
 
 ############# BOSS ============================================
 system("clear")
+User.stop_music
+User.castle_music
 adventurer.fourteen_space
 puts "A castle morphs into the field of view!
            What kind of sorcery is this!?".center(112)
@@ -124,46 +134,49 @@ adventurer.fourteen_space
 puts "something emerges from the front gate... wait...
            is that a..?".center(112)
 adventurer.fourteen_space
-sleep(2)
+sleep(3)
 system("clear")
 kangaroo
 sleep(3)
 system("clear")
 #outside castle
+
 adventurer.fourteen_space
 puts "Hello weary traveller!
    Welcome to Bearington!!".center(112)
 adventurer.fourteen_space
-sleep(2)
+sleep(3)
 system("clear")
 adventurer.fourteen_space
 puts "It's your lucky day...
            today the king is back from his travels and we are having a feast!!".center(112)
 adventurer.fourteen_space
-sleep(2)
+sleep(3)
 system("clear")
 adventurer.fourteen_space
 feast = prompt.select("Would you like to join our feast today?", ["Yes", "No"])
 
 if feast == "Yes"
-adventurer.fourteen_space
-puts "Wonderful! Right this way! Fooollllooowww meeee!! wiiippeeee!!!".center(112)
-adventurer.fourteen_space
-sleep(2)
+  adventurer.fourteen_space
+  puts "Wonderful! Right this way! Fooollllooowww meeee!! wiiippeeee!!!".center(112)
+  adventurer.fourteen_space
+  sleep(3)
 else
-adventurer.fourteen_space
-puts "Oh no no, I insist, Please! follow me, you'll love the feast!".center(112)
-adventurer.fourteen_space
-sleep(2)
+  adventurer.fourteen_space
+  puts "Oh no no, I insist, Please! follow me, you'll love the feast!".center(112)
+  adventurer.fourteen_space
+  sleep(3)
 end
 system("clear")
-adventurer.fourteen_space
-puts "King look!!!
-           ......I BROUGHT YOUR FEAST!".center(112)
-adventurer.fourteen_space
-
 boss = adventurer.create_boss
 
+adventurer.fourteen_space
+puts "King #{boss.name} look!!!
+           ......I BROUGHT YOUR FEAST!".center(112)
+adventurer.fourteen_space
+sleep(3)
+User.stop_music
+User.boss_fight_music
 battle_blink_animation
 
 keep_playing = true
@@ -181,5 +194,7 @@ until keep_playing == false
     keep_playing = boss.check_for_victor(adventurer, villain_number)
   end
 end
+
+adventurer.to_be_continued
 
 binding.pry

@@ -53,35 +53,74 @@ class User < ActiveRecord::Base
       new_adventurer
   end
 
+  ## LEADERBOARDS =================================================
 
   def user_stats
-    # fastest victory
     # treks completed
     # total successful treks
     # total unsuccessulf treks
-  end
-
-  def trek_details
-    # character stats
-    # enemies battled
-    # items accumulated
-    # currency used
-  end
-
-  def self.leaderboards
-    # fastest victory
-    # treks completed
-    # successful treks
-    # unsuccessulf treks
-    # richest final character form
-    # healthiest final character form
-    # most savage final character form
-    # luckiest final character form
+    # top 5 users in terms of successful treks. and their character?
+    # and their items?
   end
 
   def self.all_adventurers
+    binding.pry
+    self.characters
     # a list of all adventurers created and who played with them.
   end
+
+
+  ## MUSIC ======================================================
+
+  def self.starting_music
+   pid = fork{exec 'afplay', "./title.mp3"}
+ end
+
+ def self.exploration_music
+   pid = fork{exec 'afplay', "./exploration.mp3"}
+ end
+
+ def self.shop_music
+   pid = fork{exec 'afplay', "./shop.mp3"}
+ end
+
+ def self.ambush_music
+   pid = fork{exec 'afplay', "./Ambush!.mp3"}
+ end
+
+ def self.game_over_music
+   pid = fork{exec 'afplay', "./Gameover.mp3"}
+ end
+
+ def self.victory_music
+   pid = fork{exec 'afplay', "./victory.mp3"}
+ end
+
+ def self.castle_music
+    pid = fork{exec 'afplay', "./castle_intro.mp3"}
+ end
+
+ def self.boss_victory_music
+   pid = fork{exec 'afplay', "./boss_victory_music.mp3"}
+ end
+
+ def self.boss_fight_music
+   pid = fork{exec 'afplay', "./boss.mp3"}
+ end
+
+ def self.news_music
+   pid = fork{exec 'afplay', "./news.mp3"}
+ end
+
+ # def self.you_win
+ #   pid = fork{exec 'afplay', "./youwin.mp3"}
+ # end
+
+
+ def self.stop_music
+   pid = fork{exec 'killall', "afplay"}
+   sleep(0.01)
+ end
 
 
 end

@@ -65,22 +65,38 @@ class Enemy < ActiveRecord::Base
 
     def check_for_victor(adventurer, villain_number)
         if self.hp <= 0
-          system("clear")
-          you_win
-          sleep(3)
+
+          if self.boss?
+            system("clear")
+            you_win
+            sleep(3)
+          end
+
           system("clear")
           battle_blink_animation_reverse
           system("clear")
-          six_space
-          puts win_battle_quotes[rand(0..3)]
-          six_space
-          system("clear")
-          six_space
-          puts "You looted #{self.name}'s fanny pack for #{self.currency} sheckles!"
-          six_space
-          adventurer.update(currency: adventurer.currency + self.currency)
-          sleep(2)
-          adventurer.get_movie_and_news
+          if self.boss?
+            User.stop_music
+            User.boss_victory_music
+          else
+            User.stop_music
+            User.victory_music
+            fourteen_space
+            puts win_battle_quotes[rand(0..3)]
+            fourteen_space
+            sleep(2)
+            system("clear")
+            fourteen_space
+            puts "You looted #{self.name}'s fanny pack for #{self.currency} sheckles!".center(112)
+            fourteen_space
+            adventurer.update(currency: adventurer.currency + self.currency)
+            sleep(2)
+            User.stop_music
+            User.news_music
+            adventurer.get_movie_and_news
+            User.stop_music
+            system("clear")
+          end
           false
         elsif adventurer.hp <= 0
           system("clear")
@@ -91,6 +107,8 @@ class Enemy < ActiveRecord::Base
           puts defeat_quotes[rand(0..3)]
           six_space
           sleep(2)
+          User.stop_music
+          User.game_over_music
           game_over
           sleep(2)
           Adventurer.game_over_main_menu

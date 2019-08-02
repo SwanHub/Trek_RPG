@@ -15,6 +15,7 @@ class Adventurer < ActiveRecord::Base
           fight_or_town
         end
       elsif first_action == "Town"
+        User.shop_music
         yes_or_no = are_you_sure
         if yes_or_no == "Yes"
           system("clear")
@@ -37,8 +38,10 @@ class Adventurer < ActiveRecord::Base
           shop_front_animation
           sleep(3)
           self.go_to_shop(self.current_level)
+          User.stop_music
           reverse_shop_animation
           system("clear")
+          User.exploration_music
         end
       end
   end
@@ -250,7 +253,7 @@ class Adventurer < ActiveRecord::Base
   end
 
   def create_boss
-      new_boss = Enemy.create(boss?: true, atk: 7, blk: [11, 12].sample, hp: [5, 6].sample, currency: 100)
+      new_boss = Enemy.create(boss?: true, atk: [7].sample, blk: [12, 13, 14, 15].sample, hp: [12, 13, 14, 15].sample, currency: 100)
       new_boss.update(name: Getdata.get_character)
       new_boss
   end
@@ -516,6 +519,26 @@ class Adventurer < ActiveRecord::Base
   def self.game_over_main_menu
     again = @@prompt.select("Exit game:", ["Exit"])
       exit
+  end
+
+  def to_be_continued
+    fourteen_space
+    puts "Coming soon...".center(112)
+    fourteen_space
+    sleep(6)
+    fourteen_space
+    puts "to CLI near you...".center(112)
+    fourteen_space
+    sleep(4.5)
+    system("clear")
+    level_two_logo
+    sleep(3)
+    system("clear")
+    six_space
+    cya_next_time
+    six_space
+    sleep(20)
+    exit
   end
 
 end

@@ -4,12 +4,6 @@ class Enemy < ActiveRecord::Base
     @@prompt = TTY::Prompt.new
     @@moves = ["Drop Kick", "Pocket Sand", "Right Hook", "Left Hook", "Crop Dust", "Belly Slap", "Razzle Dazzle", "Paper Cut", "Soda Can Crunch", "Lick", "Tickle", "Spay with WD40", "Wet Willy", "Belly Lint Ball Fling", "Toss Block Of Cheese", "Say A Corny Pun"]
 
-    def create_boss
-      if level == 1
-        Enemy.create(boss?: true, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [9, 10, 11, 12].sample)
-      end
-    end
-
     def display_enemy_hp
         puts "                                                                         #{self.name}"
         puts "                                                                         Health: #{self.hp}"
@@ -52,11 +46,11 @@ class Enemy < ActiveRecord::Base
         adventurer.update(hp: adventurer.hp - dmg)
         adventurer.update(blk: 0)
         fourteen_space
-        puts "You took #{dmg} damage!"
+        puts "You took #{dmg} damage!".center(112)
         fourteen_space
         sleep(2)
         fourteen_space
-        puts "#{self.name} has #{self.hp} HP left!"
+        puts "#{adventurer.name} has #{adventurer.hp} HP left!".center(112)
         fourteen_space
         sleep(2)
       elsif dmg <= 0
@@ -72,13 +66,21 @@ class Enemy < ActiveRecord::Base
     def check_for_victor(adventurer, villain_number)
         if self.hp <= 0
           system("clear")
+          you_win
+          sleep(3)
+          system("clear")
           battle_blink_animation_reverse
           system("clear")
           six_space
           puts win_battle_quotes[rand(0..3)]
           six_space
+          system("clear")
+          six_space
+          puts "You looted #{self.name}'s fanny pack for #{self.currency} sheckles!"
+          six_space
+          adventurer.update(currency: adventurer.currency + self.currency)
           sleep(2)
-          you_win
+          adventurer.get_movie_and_news
           false
         elsif adventurer.hp <= 0
           system("clear")
@@ -90,6 +92,8 @@ class Enemy < ActiveRecord::Base
           six_space
           sleep(2)
           game_over
+          sleep(2)
+          Adventurer.game_over_main_menu
           false
         else
           true

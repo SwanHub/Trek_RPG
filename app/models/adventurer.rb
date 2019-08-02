@@ -5,7 +5,7 @@ class Adventurer < ActiveRecord::Base
   @@prompt = TTY::Prompt.new
 
   def fight_or_town
-      first_action = @@prompt.select("Where would you like to go? (10 seconds to choose)", ["Explore", "Town"], active_color: :red)
+      first_action = @@prompt.select("Where would you like to go?", ["Explore", "Town"], active_color: :red)
 
       if first_action == "Explore"
         yes_or_no = are_you_sure
@@ -39,8 +39,6 @@ class Adventurer < ActiveRecord::Base
           self.go_to_shop(self.current_level)
           reverse_shop_animation
           system("clear")
-        else
-          fight_or_town
         end
       end
   end
@@ -60,12 +58,11 @@ class Adventurer < ActiveRecord::Base
       item_4 = item_4(level, item_ids)
       item_5 = item_5(level, item_ids)
       item_6 = item_6(level, item_ids)
-      item_advil = advil
 
       go_to_next = false
       until go_to_next == true
-        full_item_menu_choice = shop_item_menu(item_1, item_2, item_3, item_4, item_5, item_6, item_advil)
-        go_to_next = buying_items(full_item_menu_choice, item_1, item_2, item_3, item_4, item_5, item_6, item_advil)
+        full_item_menu_choice = shop_item_menu(item_1, item_2, item_3, item_4, item_5, item_6)
+        go_to_next = buying_items(full_item_menu_choice, item_1, item_2, item_3, item_4, item_5, item_6)
       end
   end
 
@@ -130,24 +127,18 @@ class Adventurer < ActiveRecord::Base
       item_per_level(level).find{|item| item.id == item_id_array[5]}
   end
 
-  def advil
-      advil = Item.find(33)
-  end
-
-    def shop_item_menu(one, two, three, four, five, six, health)
+    def shop_item_menu(one, two, three, four, five, six)
       display_stats
-      # binding.pry
       item_check = @@prompt.select("Here are your items. Click for stats. (scroll for more):", ["#{one.name} - #{one.item_type} - $#{one.currency}",
         "#{two.name} - #{two.item_type} - $#{two.currency}",
         "#{three.name} - #{three.item_type} - $#{three.currency}",
         "#{four.name} - #{four.item_type} - $#{four.currency}",
         "#{five.name} - #{five.item_type} - $#{five.currency}",
         "#{six.name} - #{six.item_type} - $#{six.currency}",
-        "#{health.name} - $#{health.currency}",
         "Leave shoppe"], active_color: :red)
       end
 
-    def buying_items(choice, one, two, three, four, five, six, health)
+    def buying_items(choice, one, two, three, four, five, six)
 
       case choice
       when "#{one.name} - #{one.item_type} - $#{one.currency}"
@@ -174,12 +165,6 @@ class Adventurer < ActiveRecord::Base
       display_item_stats(six)
       buy_or_return(six)
 
-      when "#{health.name} - $#{health.currency}"
-      puts "Grabbin pills"
-      puts "Increases hp by 25%"
-      puts "Use in times of need"
-      buy_or_return(health)
-
       when "Leave shoppe"
         certainty = @@prompt.select("Are you sure? You can't come back this level.", ["leave", "stay"])
         if certainty == "leave"
@@ -193,7 +178,6 @@ class Adventurer < ActiveRecord::Base
     def buy_or_return(item)
       option = @@prompt.select("Do you want to buy this item?", ["Buy item", "Nevermind"])
       if option == "Buy item" && (self.currency - item.currency) >= 0
-
          if !self.item_id
             self.update(item_id: item.id)
 
@@ -204,20 +188,32 @@ class Adventurer < ActiveRecord::Base
                self.update(item_3_id: item.id)
 
          else
-               item_choice = @@prompt.select("Your hands are full, fool! Select an item to drop.",
-               ["#{item_one.name}", "#{item_two.name}", "#{item_three.name}", "Nevermind"])
                item_one = Item.find(self.item_id)
                item_two = Item.find(self.item_2_id)
                item_three = Item.find(self.item_3_id)
+               item_choice = @@prompt.select("Your hands are full, fool! Select an item to drop.",
+               ["#{item_one.name}", "#{item_two.name}", "#{item_three.name}", "Nevermind"])
 
                case
                when "#{item_one.name}"
+               self.update(atk: self.atk - item_one.atk)
+               self.update(blk: self.blk - item_one.blk)
+               self.update(hp: self.hp - item_one.hp)
+               self.update(luck: self.luck - item_one.luck)
                self.update(item_id: item.id)
 
                when "#{item_two.name}"
+               self.update(atk: self.atk - item_two.atk)
+               self.update(blk: self.blk - item_two.blk)
+               self.update(hp: self.hp - item_two.hp)
+               self.update(luck: self.luck - item_two.luck)
                self.update(item_2_id: item.id)
 
                when "#{item_three.name}"
+               self.update(atk: self.atk - item_three.atk)
+               self.update(blk: self.blk - item_three.blk)
+               self.update(hp: self.hp - item_three.hp)
+               self.update(luck: self.luck - item_three.luck)
                self.update(item_3_id: item.id)
                end
           end
@@ -228,7 +224,11 @@ class Adventurer < ActiveRecord::Base
           self.update(luck: self.luck + item.luck)
 
       elsif option == "Buy item" && (self.currency - item.currency) < 0
-        puts "You cant afford this, fool!"
+        system("clear")
+        fourteen_space
+        puts "You cant afford this, fool!".center(112)
+        fourteen_space
+        sleep(2)
       end
       system("clear")
       false
@@ -237,9 +237,9 @@ class Adventurer < ActiveRecord::Base
   def create_enemy(level)
 
     if level == 1
-      new_enemy = Enemy.create(boss?: false, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [9, 10, 11, 12].sample, item_id: rand(1..16))
-    elsif level == 2
-      new_enemy = Enemy.create(boss?: false, atk: [7, 8, 9].sample, blk: [7, 8, 9].sample, hp: [7, 8, 9].sample, currency: [13, 14, 15, 16].sample, item_id: rand(17..32))
+      new_enemy = Enemy.create(boss?: false, atk: [4, 5, 6].sample, blk: [4, 5, 6].sample, hp: [4, 5, 6].sample, currency: [13, 14, 15, 16].sample, item_id: rand(1..16))
+    # elsif level == 2
+    #   new_enemy = Enemy.create(boss?: false, atk: [7, 8, 9].sample, blk: [7, 8, 9].sample, hp: [7, 8, 9].sample, currency: [13, 14, 15, 16].sample, item_id: rand(17..32))
     end
 
     new_enemy.update(name: Getdata.get_character)
@@ -249,14 +249,21 @@ class Adventurer < ActiveRecord::Base
     new_enemy
   end
 
-
+  def create_boss
+      new_boss = Enemy.create(boss?: true, atk: 7, blk: [11, 12].sample, hp: [5, 6].sample, currency: 100)
+      new_boss.update(name: Getdata.get_character)
+      new_boss
+  end
 
   def get_movie_and_news
       choice =  @@prompt.select("You're tired. Take a break and heal?", ["Sounds awesome.", "No I'm feeling snappy."])
         if choice == "Sounds awesome."
+
            movie_or_news = @@prompt.select("Watch a movie or read the news?", ["Watch Movie / TV", "Read News", "Ready to rock."])
            if movie_or_news == "Watch Movie / TV"
               loop do
+                six_space
+                system("clear")
                 movie = @@prompt.ask("Search movie / show:")
                 puts ""
                 Getdata.get_movie(movie)
@@ -269,6 +276,7 @@ class Adventurer < ActiveRecord::Base
               end
             elsif movie_or_news == "Read News"
               loop do
+                six_space
                 article_type = @@prompt.select("Scroll publication or headlines:", ["Publication", "US Headlines", "Business Headlines", "Tech News", "Feeling refreshed"])
                 if article_type == "Feeling refreshed"
                   break
@@ -278,12 +286,11 @@ class Adventurer < ActiveRecord::Base
               end
             end
         end
-        binding.pry
-        self.update(atk: self.atk + 1, blk: self.blk + 1, hp: self.hp + 1)
-      puts "Your stats regenerated slightly..."
+        self.update(atk: self.atk + 1, blk: self.blk + 1, hp: self.hp + 5)
+      six_space
+      puts "Your stats regenerated slightly...".center(112)
       display_stats
   end
-
 
 
   ## STATS ======================================================
@@ -292,19 +299,10 @@ class Adventurer < ActiveRecord::Base
     display_adventurer_ascii(self.class_type)
     sleep(1)
     system("clear")
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
     puts "You chose #{self.class_type}!".center(112)
     puts "~~~~~~~~~~~~".center(112)
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
     adventurer_name = @@prompt.ask("What is your adventurer's name?", active_color: :red)
     self.update(name: adventurer_name)
     system("clear")
@@ -317,7 +315,7 @@ class Adventurer < ActiveRecord::Base
     puts "#{self.name}'s stats:".center(112)
     display_stats
   end
-  
+
   def display_adventurer_ascii(class_type)
       case class_type
       when "Juggernaut"
@@ -336,7 +334,7 @@ class Adventurer < ActiveRecord::Base
 
   def display_stats
     puts ""
-    puts "Sheckles : $#{self.currency}".center(112)
+    puts "Sheckles: $#{self.currency}".center(112)
     puts ""
     puts ""
     display_fight_stats
@@ -362,6 +360,8 @@ class Adventurer < ActiveRecord::Base
   end
 
   def display_item_stats(item)
+    system("clear")
+    six_space
     puts "Sheckles: $#{self.currency}".center(112)
     puts ""
     puts "Updated stats with item".center(112)
@@ -391,6 +391,131 @@ class Adventurer < ActiveRecord::Base
     puts "Block remaining: #{self.blk}"
     puts "HP remaining: #{self.hp}"
     puts ""
+  end
+
+  def exploring
+    system("clear")
+    gotten_lost
+    sleep(3)
+    system("clear")
+    tree_animation
+    system("clear")
+    anyone_out_there
+    sleep(2)
+    system("clear")
+    reverse_tree_animation
+    system("clear")
+    going_in_circles
+    sleep(2)
+    system("clear")
+  end
+
+  def gotten_lost
+    puts "=============================================================================================================="
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "Wait... it appears #{self.name} has gotten lost...
+                     Wandering aimlessly around this desolate plain...".center(112)
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "=============================================================================================================="
+  end
+  def anyone_out_there
+    puts "=============================================================================================================="
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts " 'Is there anyone out there?' ".center(112)
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "=============================================================================================================="
+  end
+  def going_in_circles
+    puts "=============================================================================================================="
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "      '....It feels like im just going in circles' ".center(112)
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts "=============================================================================================================="
+  end
+
+  def six_space
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+  end
+
+  def fourteen_space
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+  end
+
+  def self.game_over_main_menu
+    again = @@prompt.select("Exit game:", ["Exit"])
+      exit
   end
 
 end

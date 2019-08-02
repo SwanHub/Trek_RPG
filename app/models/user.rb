@@ -19,32 +19,37 @@ class User < ActiveRecord::Base
 
       case adventurer_choice
         when "Juggernaut"
-        new_adventurer = Adventurer.create(class_type: "Juggernaut", atk: [2, 3].sample, blk: [5, 6, 7].sample, hp: [5, 6, 7].sample, luck: [3, 4, 5].sample, currency: [3, 4, 5].sample)
+        luck = [1, 2].sample
+        new_adventurer = Adventurer.create(class_type: "Juggernaut", atk: [2, 3].sample + luck, blk: [5, 6, 7].sample + luck, hp: [5, 6, 7].sample + luck, luck: luck, currency: [3, 4, 5].sample)
         juggernaut()
         sleep(1.5)
 
         when "Street Rat"
-        new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [14, 15, 16].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [2, 3].sample, currency: [1, 2].sample)
+        luck = [1, 2].sample
+        new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [14, 15, 16].sample + luck, blk: [2, 3].sample + luck, hp: [2, 3].sample + luck, luck: luck, currency: [1, 2].sample)
         street_rat()
         sleep(1.5)
 
         when "Warrior"
-        new_adventurer = Adventurer.create(class_type: "Warrior", atk: [3, 4, 5].sample, blk: [3, 4, 5].sample, hp: [3, 4, 5].sample, luck: [3, 4, 5].sample, currency: [3, 4, 5].sample)
+        luck = [1, 2].sample
+        new_adventurer = Adventurer.create(class_type: "Warrior", atk: [5, 6, 7].sample + luck, blk: [3, 4, 5].sample + luck, hp: [5, 6, 7].sample + luck, luck: luck, currency: [3, 4, 5].sample)
         warrior()
         sleep(1.5)
 
         when "Tax Collector"
-        new_adventurer = Adventurer.create(class_type: "Tax Collector", atk: [1, 2].sample, blk: [1, 2].sample, hp: [1, 2].sample, luck: [1, 2].sample, currency: [14, 15, 16].sample)
+        luck = [1, 2].sample
+        new_adventurer = Adventurer.create(class_type: "Tax Collector", atk: [1, 2].sample + luck, blk: [1, 2].sample + luck, hp: [1, 2].sample + luck, luck: luck, currency: [14, 15, 16].sample)
         tax_collector()
         sleep(1.5)
 
       when "Con Artist"
-        new_adventurer = Adventurer.create(class_type: "Con Artist", atk: [2, 3].sample, blk: [2, 3].sample, hp: [2, 3].sample, luck: [5, 6, 7].sample, currency: [5, 6, 7].sample)
+        luck = [5, 6, 7].sample
+        new_adventurer = Adventurer.create(class_type: "Con Artist", atk: [2, 3].sample + luck, blk: [2, 3].sample + luck, hp: [2, 3].sample + luck, luck: luck, currency: [5, 6, 7].sample)
         con_artist()
         sleep(1.5)
       end
       self.adventurers << new_adventurer
-      new_adventurer.update(base_atk: new_adventurer.atk, base_blk: new_adventurer.blk, base_hp:   new_adventurer.hp, base_luck: new_adventurer.luck, base_currency: new_adventurer.currency)
+      new_adventurer.update(base_atk: new_adventurer.atk, base_blk: new_adventurer.blk, base_hp: new_adventurer.hp, base_luck: new_adventurer.luck, base_currency: new_adventurer.currency)
       new_adventurer
   end
 

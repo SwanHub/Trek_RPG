@@ -13,7 +13,6 @@ ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
 
-
 # title screen animations
 system("clear")
 # start_animation
@@ -74,23 +73,20 @@ level_one_logo
 sleep(2)
 # animation... MAP (starting point)
 adventurer.fight_or_town
-
+battle_blink_animation
 system("clear")
-castle
-sleep(4)
-# trees animation
+adventurer.exploring
 
 # creates battles, creates enemy...
 enemy = adventurer.create_enemy(adventurer.current_level)
 
-
 enemy.enemy_text_appears
 sleep(2)
-battle_blink_animation
+# battle_blink_animation
 villain_number = rand(0..5)
 system("clear")
 villains[villain_number].call
-sleep(5)
+sleep(3)
 
 adventurer.save_block
 
@@ -102,39 +98,88 @@ until keep_playing == false
   adventurer.display_hp
   enemy.move_prompt
   enemy.attack(adventurer)
-  sleep(5)
+  sleep(1)
   keep_playing = enemy.check_for_victor(adventurer, villain_number)
   if keep_playing == true
     enemy.defend(adventurer)
-    sleep(3)
+    sleep(1)
     keep_playing = enemy.check_for_victor(adventurer, villain_number)
   end
 end
 
 adventurer.return_block_to_original
-puts ""
-puts ""
-puts ""
-puts ""
-puts ""
-adventurer.get_movie_and_news
 
-# prompt to fight...
-# woods animation .........
+############# BOSS ============================================
+system("clear")
+adventurer.fourteen_space
+puts "A castle morphs into the field of view!
+           What kind of sorcery is this!?".center(112)
+adventurer.fourteen_space
+sleep(2)
+system("clear")
+castle_materializes
+sleep(3)
+system("clear")
+adventurer.fourteen_space
+puts "something emerges from the front gate... wait...
+           is that a..?".center(112)
+adventurer.fourteen_space
+sleep(2)
+system("clear")
+kangaroo
+sleep(3)
+system("clear")
+#outside castle
+adventurer.fourteen_space
+puts "Hello weary traveller!
+   Welcome to Bearington!!".center(112)
+adventurer.fourteen_space
+sleep(2)
+system("clear")
+adventurer.fourteen_space
+puts "It's your lucky day...
+           today the king is back from his travels and we are having a feast!!".center(112)
+adventurer.fourteen_space
+sleep(2)
+system("clear")
+adventurer.fourteen_space
+feast = prompt.select("Would you like to join our feast today?", ["Yes", "No"])
 
-puts ""
-puts ""
-puts "YOU LEFT THE SHOP".center(112)
-puts ""
-puts ""
-puts ""
+if feast == "Yes"
+adventurer.fourteen_space
+puts "Wonderful! Right this way! Fooollllooowww meeee!! wiiippeeee!!!".center(112)
+adventurer.fourteen_space
+sleep(2)
+else
+adventurer.fourteen_space
+puts "Oh no no, I insist, Please! follow me, you'll love the feast!".center(112)
+adventurer.fourteen_space
+sleep(2)
+end
+system("clear")
+adventurer.fourteen_space
+puts "King look!!!
+           ......I BROUGHT YOUR FEAST!".center(112)
+adventurer.fourteen_space
 
+boss = adventurer.create_boss
+
+battle_blink_animation
+
+keep_playing = true
+until keep_playing == false
+  system("clear")
+  villains[6].call
+  adventurer.display_hp
+  boss.move_prompt
+  boss.attack(adventurer)
+  sleep(1)
+  keep_playing = boss.check_for_victor(adventurer, villain_number)
+  if keep_playing == true
+    boss.defend(adventurer)
+    sleep(1)
+    keep_playing = boss.check_for_victor(adventurer, villain_number)
+  end
+end
 
 binding.pry
-
-# play_game
-
-### MAY NEED THIS AGAIN =============================
-# (17..32).to_a.map {|integer|
-#   Item.all.find(integer).update(item_level: 2)
-#  }

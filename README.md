@@ -8,25 +8,16 @@ to run this application you need the following:
 A text editor similar to VSCode or Atom
 Ruby
 The following Ruby gems:
-```gem "activerecord"```
-
-```gem "sqlite3"```
-
-```gem "sinatra"```
-
-```gem "sinatra-activerecord"```
-
-```gem "require_all"```
-
-```gem "pry"```
-
-```gem "json"```
-
-```gem "rest-client"```
-
-```gem "tty-prompt"```
-
-```gem "paint"```
+ -- ```gem "activerecord"```
+ -- ```gem "sqlite3"```
+ -- ```gem "sinatra"```
+ -- ```gem "sinatra-activerecord"```
+ -- ```gem "require_all"```
+ -- ```gem "pry"```
+ -- ```gem "json"```
+ -- ```gem "rest-client"```
+ -- ```gem "tty-prompt"```
+ -- ```gem "paint"```
 
 (These will be included within the Gem file once the repo is cloned, if you run into any issues run "bundle install" within your terminal to fix any gem related errors.)
 

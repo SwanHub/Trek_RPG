@@ -63,7 +63,7 @@ class Enemy < ActiveRecord::Base
       end
     end
 
-    def check_for_victor(adventurer, villain_number)
+    def check_for_victor(adventurer, enemy_number)
         if self.hp <= 0
           adventurer.update(result: "win")
           if self.boss?
@@ -100,7 +100,7 @@ class Enemy < ActiveRecord::Base
           false
         elsif adventurer.hp <= 0
           system("clear")
-          villains[villain_number]
+          enemies[enemy_number]
           battle_blink_animation_reverse
           system("clear")
           six_space

@@ -91,9 +91,9 @@ User.stop_music
 User.ambush_music
 battle_blink_animation
 
-villain_number = rand(0..5)
+enemy_number = rand(0..5)
 system("clear")
-villains[villain_number].call
+enemies[enemy_number].call
 sleep(3)
 
 adventurer.save_block
@@ -102,16 +102,16 @@ keep_playing = true
 
 until keep_playing == false
   system("clear")
-  villains[villain_number].call
+  enemies[enemy_number].call
   adventurer.display_hp
   enemy.move_prompt
   enemy.attack(adventurer)
   sleep(1)
-  keep_playing = enemy.check_for_victor(adventurer, villain_number)
+  keep_playing = enemy.check_for_victor(adventurer, enemy_number)
   if keep_playing == true
     enemy.defend(adventurer)
     sleep(1)
-    keep_playing = enemy.check_for_victor(adventurer, villain_number)
+    keep_playing = enemy.check_for_victor(adventurer, enemy_number)
   end
 end
 
@@ -182,16 +182,16 @@ battle_blink_animation
 keep_playing = true
 until keep_playing == false
   system("clear")
-  villains[6].call
+  enemies[6].call
   adventurer.display_hp
   boss.move_prompt
   boss.attack(adventurer)
   sleep(1)
-  keep_playing = boss.check_for_victor(adventurer, villain_number)
+  keep_playing = boss.check_for_victor(adventurer, enemy_number)
   if keep_playing == true
     boss.defend(adventurer)
     sleep(1)
-    keep_playing = boss.check_for_victor(adventurer, villain_number)
+    keep_playing = boss.check_for_victor(adventurer, enemy_number)
   end
 end
 

@@ -19,9 +19,9 @@ The following Ruby gems:
  -- ```gem "tty-prompt"```
  -- ```gem "paint"```
 
-(These will be included within the Gem file once the repo is cloned, if you run into any issues run "bundle install" within your terminal to fix any gem related errors.)
+(All gems are included in the Gem file once the repo is cloned. If you run into any issues run ```bundle install``` within your terminal to fix any gem related errors.)
 
-Once the following gems are correctly installed run 'rake db:console' in your terminal in order to fire up the game!
+Once the following gems are correctly installed run ```ruby config/environment``` in your terminal in order to fire up the game!
 
 
 

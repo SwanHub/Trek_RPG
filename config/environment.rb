@@ -12,13 +12,13 @@ connection = ActiveRecord::Base.establish_connection(adapter: 'sqlite3', databas
 ActiveRecord::Base.logger = nil
 prompt = TTY::Prompt.new
 User.connection
-User.stop_music
+# stop_music
 
-intro_animation_sequence
+# intro_animation_sequence
 # title screen animations
 system("clear")
-User.starting_music
-start_animation
+# starting_music
+# start_animation
 # user sign in
 main_user = User.main_menu_sign_in
 system("clear")
@@ -72,23 +72,24 @@ sleep(6)
 system("clear")
 
 # start level 1, fight or shop?
-User.stop_music
-User.exploration_music
-level_one_logo
-sleep(2)
-# animation... MAP (starting point)
+# stop_music
+# exploration_music
+# level_one_logo
+# sleep(2)
+
+# animation...
+
 adventurer.fight_or_town
 battle_blink_animation
 system("clear")
-adventurer.exploring
+# adventurer.exploring
 
 # creates battles, creates enemy...
 enemy = adventurer.create_enemy(adventurer.current_level)
 
-enemy.enemy_text_appears
-sleep(2)
-User.stop_music
-User.ambush_music
+enemy.center_format("You were ambushed by #{enemy.name}!!!!!!!")
+# stop_music
+# ambush_music
 battle_blink_animation
 
 enemy_number = rand(0..5)
@@ -119,8 +120,8 @@ adventurer.return_block_to_original
 
 ############# BOSS ============================================
 system("clear")
-User.stop_music
-User.castle_music
+# stop_music
+# castle_music
 adventurer.fourteen_space
 puts "A castle morphs into the field of view!
            What kind of sorcery is this!?".center(112)
@@ -139,8 +140,8 @@ system("clear")
 kangaroo
 sleep(3)
 system("clear")
-#outside castle
 
+#outside castle
 adventurer.fourteen_space
 puts "Hello weary traveller!
    Welcome to Bearington!!".center(112)
@@ -175,8 +176,8 @@ puts "King #{boss.name} look!!!
            ......I BROUGHT YOUR FEAST!".center(112)
 adventurer.fourteen_space
 sleep(3)
-User.stop_music
-User.boss_fight_music
+# stop_music
+# boss_fight_music
 battle_blink_animation
 
 keep_playing = true

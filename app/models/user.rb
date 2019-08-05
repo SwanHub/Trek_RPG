@@ -7,7 +7,26 @@ class User < ActiveRecord::Base
     def self.main_menu_sign_in
         puts "Sign in or create new account below: "
         username_input = @@prompt.ask("username:", active_color: :red)
+        system("clear")
         User.find_or_create_by(name: username_input)
+    end
+
+    def trek_or_leaderboards
+        loop do
+            user_response = @@prompt.select("Welcome, your options:", ["New Trek", "Leaderboards", "Leave"], active_color: :cyan)
+            if user_response == "New Trek"
+                system("clear")
+                six_space
+                puts "PREPARE YOURSELF".center(112)
+                six_space
+                break
+            elsif user_response == "Leaderboards"
+                system("clear")
+                leaderboard
+            elsif user_response == "Leave"
+                exit
+            end
+        end
     end
 
     def create_adventurer
@@ -18,24 +37,24 @@ class User < ActiveRecord::Base
         case adventurer_choice
         when "Juggernaut"
             new_adventurer = Adventurer.create(class_type: "Juggernaut", atk: [2, 3].sample + luck, blk: [5, 6, 7].sample + luck, hp: [5, 6, 7].sample + luck, luck: luck, currency: [3, 4, 5].sample)
-            juggernaut
+            juggernaut_ascii
 
         when "Street Rat"
             new_adventurer = Adventurer.create(class_type: "Street Rat", atk: [14, 15, 16].sample + luck, blk: [2, 3].sample + luck, hp: [2, 3].sample + luck, luck: luck, currency: [1, 2].sample)
-            street_rat
+            street_rat_ascii
 
         when "Warrior"
             new_adventurer = Adventurer.create(class_type: "Warrior", atk: [5, 6, 7].sample + luck, blk: [3, 4, 5].sample + luck, hp: [5, 6, 7].sample + luck, luck: luck, currency: [3, 4, 5].sample)
-            warrior
+            warrior_ascii
 
         when "Tax Collector"
             new_adventurer = Adventurer.create(class_type: "Tax Collector", atk: [1, 2].sample + luck, blk: [1, 2].sample + luck, hp: [1, 2].sample + luck, luck: luck, currency: [14, 15, 16].sample)
-            tax_collector
+            tax_collector_ascii
 
         when "Con Artist"
             luck = [5, 6, 7].sample
             new_adventurer = Adventurer.create(class_type: "Con Artist", atk: [2, 3].sample + luck, blk: [2, 3].sample + luck, hp: [2, 3].sample + luck, luck: luck, currency: [5, 6, 7].sample)
-            con_artist
+            con_artist_ascii
         end
 
         sleep(1.5)
@@ -94,6 +113,21 @@ class User < ActiveRecord::Base
         puts "#{all_users_wins[-3][:username]}: #{all_users_wins[-3][:win_count]} wins".center(112)
         puts "#{all_users_wins[-4][:username]}: #{all_users_wins[-4][:win_count]} wins".center(112)
         puts "#{all_users_wins[-5][:username]}: #{all_users_wins[-5][:win_count]} wins".center(112)
+    end
+
+    def lets_begin
+        six_space
+        puts Paint%['~~::||||| %{text} |||||::~~'.center(102), :default, text: ["Lets begin #{self.name}!", :blue]]
+        six_space
+    end
+
+    def six_space
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
+        puts ""
     end
 
 end

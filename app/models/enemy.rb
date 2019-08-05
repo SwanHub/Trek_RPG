@@ -20,6 +20,7 @@ class Enemy < ActiveRecord::Base
             self.update(blk: self.blk - adventurer.atk)
             center_format("#{self.name}'s block was too strong! They have #{self.blk} block left!")
         end
+        sleep(1)
     end
 
     def defend(adventurer)
@@ -33,6 +34,7 @@ class Enemy < ActiveRecord::Base
             adventurer.update(blk: adventurer.blk - self.atk)
             center_format("#{self.name} did not pierce your block!")
         end
+        sleep(1)
     end
 
     def check_for_victor(adventurer, enemy_number)
@@ -45,7 +47,7 @@ class Enemy < ActiveRecord::Base
             false
         elsif adventurer.hp <= 0
             system("clear")
-            enemies[enemy_number]
+            enemy_icons[enemy_number]
             battle_blink_animation_reverse
             center_format(defeat_quotes[rand(0..3)])
             # stop_music
@@ -59,7 +61,7 @@ class Enemy < ActiveRecord::Base
         end
     end
 
-    # helper
+    # check_for_victor helper
     def defeat_boss_or_minion(adventurer)
         if self.boss?
             system("clear")

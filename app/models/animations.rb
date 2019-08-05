@@ -170,6 +170,7 @@ def reverse_shop_animation
     sleep(0.1)
 end
 def castle_materializes
+    system("clear")
     castle_10
     sleep(0.5)
     system("clear")
@@ -198,6 +199,7 @@ def castle_materializes
     sleep(0.5)
     system("clear")
     castle_01
+    sleep(3)
 end
 def tree_animation
     background_tree_01
@@ -349,6 +351,7 @@ def battle_blink_animation
     sleep(0.07)
     blink_open_battle_13
     sleep(0.07)
+    system("clear")
 end
 def battle_blink_animation_reverse
     blink_open_battle_13
@@ -378,7 +381,7 @@ def battle_blink_animation_reverse
     blink_open_battle_01
     sleep(0.07)
 end
-def enemies
+def enemy_icons
     [method(:shrek), method(:robot), method(:chicken), method(:santa), method(:mr_potatohead), method(:spiderman), method(:king_bear)]
 end
 
@@ -2221,7 +2224,7 @@ def blink_open_battle_01
 end
 
 ## Adventurer Types ====================================================
-def warrior
+def warrior_ascii
     puts "                                                                  /|"
     puts "                                                                /'||"
     puts "                                                               |  ||"
@@ -2252,7 +2255,7 @@ def warrior
     puts "                                                          __  $|===|%\\/'  /$$$$$$$$$$$%%%%$$|        ,''  |"
     puts "                                                         ///\\ $|===|/'  /$$$$$$%$$$$$$$%%%%$(            /'"
 end
-def tax_collector
+def tax_collector_ascii
     puts "                                                                           ;;\\/;;;;;;;;"
     puts "                                                             $           ;;;;;;;;;;;;;;;;;               $"
     puts "                                                                      ;;;;;;;;;;;;     ;;;;;"
@@ -2283,7 +2286,7 @@ def tax_collector
     puts "                                                        ______________/%%%%\\/\\    /\\/%%%%\\______________"
     puts "                                                       / :  :  :  /  .\\%%%%%%%\\  /%%%%%%%/.  \\  :  :  : \\"
 end
-def con_artist
+def con_artist_ascii
     puts "                                                                                 ____..."
     puts "                                                                        .-`--````.__    `."
     puts "                                                                       |            `    |"
@@ -2305,7 +2308,7 @@ def con_artist
     puts "                                                              b.--d .d88888P8888888888888888a:f888888|888888b"
     puts "                                                              88888b 888888|8888888888888888888888888\\8888888"
 end
-def street_rat
+def street_rat_ascii
     puts "                                                                     _                       __"
     puts "                                                                   /   \\                  /      \\"
     puts "                                                                  '      \\              /          \\"
@@ -2336,7 +2339,7 @@ def street_rat
     puts "                                                          \"\"\"\"\"\"\"\"\"\".oOOOOOOOOOOOOOOOOOOOOOOOOOOOOo"
     puts "                                                                  QQQQO\"'                     `\"QQQQ"
 end
-def juggernaut
+def juggernaut_ascii
     puts "                                                            __.--|~|--.__                               ,,;/;"
     puts "                                                          /~     | |    ;~\\                          ,;;;/;;'"
     puts "                                                         /|      | |    ;~\\\\                      ,;;;;/;;;'"
@@ -2393,6 +2396,7 @@ def shrek
     puts "                                              /++++|#########|  \\      .---..       ,/      ,'##########.\\"
     puts "                                             //++++|#########\\.  \\.              ,-/      ,'########,+++++\\"
     puts "================================================================================================================"
+    sleep(3)
 end
 def robot
     puts "================================================================================================================"
@@ -2419,6 +2423,7 @@ def robot
     puts ""
     puts ""
     puts "================================================================================================================"
+    sleep(3)
 end
 def chicken
     puts "================================================================================================================"
@@ -2445,6 +2450,7 @@ def chicken
     puts "                                                                                 | | |"
     puts "                                                                               __| | |__"
     puts "================================================================================================================"
+    sleep(3)
 end
 def santa
     puts "================================================================================================================"
@@ -2471,6 +2477,7 @@ def santa
     puts ""
     puts ""
     puts "================================================================================================================"
+    sleep(3)
 end
 def mr_potatohead
     puts "================================================================================================================"
@@ -2497,6 +2504,7 @@ def mr_potatohead
     puts "                                                                       '`'     `-----`   `-----' "
     puts ""
     puts "================================================================================================================"
+    sleep(3)
 end
 def spiderman
     puts "================================================================================================================"
@@ -2523,8 +2531,10 @@ def spiderman
     puts "                                                                             /;;|"
     puts "                                                                             \\;;|"
     puts "================================================================================================================"
+    sleep(3)
 end
 def kangaroo
+    system("clear")
     puts "================================================================================================================"
     puts ""
     puts ""
@@ -2549,6 +2559,8 @@ def kangaroo
     puts ""
     puts ""
     puts "================================================================================================================"
+    sleep(3)
+    system("clear")
 end
 def king_bear
     puts "================================================================================================================"
@@ -2575,6 +2587,7 @@ def king_bear
     puts ""
     puts ""
     puts "================================================================================================================"
+    sleep(3)
 end
 
 ## SCENERY ===================================================================
@@ -3401,22 +3414,15 @@ end
 
 ## SIGNAGE ===========================================================
 def level_one_logo
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
     puts Paint['_____     ________  ____   ____  ________  _____       __'.center(112), :green, :bright]
     puts Paint['|_   _|   |_   __  ||_  _| |_  _||_   __  ||_   _|     /  |'.center(112), :green, :bright]
     puts Paint[' | |       | |_ \\_|  \\ \\   / /    | |_ \\_|  | |       `| |'.center(112), :green, :bright]
     puts Paint[' | |   _   |  _| _    \\ \\ / /     |  _| _   | |   _    | |'.center(112), :green, :bright]
     puts Paint[' _| |__/ | _| |__/ |    \\ v /     _| |__/ | _| |__/ |  _| |_'.center(112), :green, :bright]
     puts Paint[' |________||________|     \\_/     |________||________| |_____|'.center(112), :green, :bright]
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
+    sleep(2)
 end
 def level_two_logo
     puts ""

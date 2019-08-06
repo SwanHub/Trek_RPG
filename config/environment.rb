@@ -13,11 +13,11 @@ ActiveRecord::Base.logger = nil
 User.connection
 stop_music
 
-# intro_animation_sequence
+intro_animation_sequence
 
 ## title screen animations
-# starting_music
-# start_animation
+starting_music
+start_animation
 
 ## user sign in // main menu
 main_user = User.main_menu_sign_in
@@ -31,20 +31,20 @@ adventurer = main_user.create_adventurer
 adventurer.beginning_stats
 
 ## start level 1, fight or shop?
-# stop_music
-# exploration_music
-# level_one_logo
+stop_music
+exploration_music
+level_one_logo
 
 
 adventurer.fight_or_town
 battle_blink_animation
-# adventurer.exploring
+adventurer.exploring
 
 ## creates battles, creates enemy...
 enemy = adventurer.create_enemy
 enemy.center_format("You were ambushed by #{enemy.name}!!!!!!!")
-# stop_music
-# ambush_music
+stop_music
+ambush_music
 battle_blink_animation
 enemy_number = rand(0..5)
 enemy_icons[enemy_number].call
@@ -57,13 +57,11 @@ adventurer.game_loop(enemy, enemy_number)
 adventurer.return_block_to_original
 
 ## boss battle
-# stop_music
-# castle_music
 adventurer.encounter_castle
-adventurer.encounter_boss
+boss = adventurer.encounter_boss
 
-# stop_music
-# boss_fight_music
+stop_music
+boss_fight_music
 battle_blink_animation
 adventurer.game_loop(boss, 6)
 adventurer.to_be_continued

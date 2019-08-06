@@ -3425,12 +3425,7 @@ def level_one_logo
     sleep(2)
 end
 def level_two_logo
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
     puts ""
     puts ""
     puts ""
@@ -3443,12 +3438,7 @@ def level_two_logo
     puts ""
     puts ""
     puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
-    puts ""
+    six_space
 end
 def game_over
     puts Paint['                      ▄████  ▄▄▄       ███▄ ▄███▓▓█████     ▒█████   ██▒   █▓▓█████  ██▀███
@@ -3497,4 +3487,13 @@ def cya_next_time
                                                     ########|  # |/ m###########
                                                      \"#######      ###########\"
                                                        \"\"\"\"\"\"       \"\"\"\"\"\"\"\"\"\"", :magenta]
+end
+
+def six_space
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
+    puts ""
 end

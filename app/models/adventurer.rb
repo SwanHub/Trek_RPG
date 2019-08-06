@@ -16,16 +16,17 @@ class Adventurer < ActiveRecord::Base
                 fight_or_town
             end
         when "Town"
-            # shop_music
+            stop_music
+            shop_music
             if yes_or_no == "Yes"
                 center_format("Ye comes across a small town wit a single shoppe.")
                 shop_front_animation
                 sleep(3)
                 self.go_to_shop(self.current_level)
-                # stop_music
+                stop_music
                 reverse_shop_animation
                 system("clear")
-                # exploration_music
+                exploration_music
             end
         end
     end
@@ -311,7 +312,7 @@ class Adventurer < ActiveRecord::Base
 
     def encounter_boss
         fourteen_space
-        feast = prompt.select("Would you like to join our feast today?", ["Yes", "No"])
+        feast = @@prompt.select("Would you like to join our feast today?", ["Yes", "No"])
         if feast == "Yes"
             center_format("Wonderful! Right this way! Fooollllooowww meeee!! wiiippeeee!!!")
         else
@@ -408,6 +409,8 @@ class Adventurer < ActiveRecord::Base
 
     ## MISCELLANEOUS ================================================
     def encounter_castle
+        stop_music
+        castle_music
         system("clear")
         center_format("A castle morphs into the field of view!
                  What kind of sorcery is this!?")
@@ -468,6 +471,7 @@ class Adventurer < ActiveRecord::Base
         six_space
         cya_next_time
         sleep(20)
+        stop_music
         exit
     end
 

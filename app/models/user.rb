@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
                 break
             elsif user_response == "Leaderboards"
                 system("clear")
-                leaderboard
+                self.class.leaderboard
             elsif user_response == "Leave"
                 exit
             end

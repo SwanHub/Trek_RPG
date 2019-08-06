@@ -50,11 +50,12 @@ class Enemy < ActiveRecord::Base
             enemy_icons[enemy_number]
             battle_blink_animation_reverse
             center_format(defeat_quotes[rand(0..3)])
-            # stop_music
-            # game_over_music
+            stop_music
+            game_over_music
             game_over
             sleep(2)
             Adventurer.game_over_main_menu
+            stop_music
             false
         else
             true
@@ -67,18 +68,18 @@ class Enemy < ActiveRecord::Base
             system("clear")
             you_win
             sleep(3)
-            # stop_music
-            # boss_victory_music
+            stop_music
+            boss_victory_music
         else
-            # stop_music
-            # victory_music
+            stop_music
+            victory_music
             center_format(win_battle_quotes[rand(0..3)])
             center_format("You looted #{self.name}'s fanny pack for #{self.currency} sheckles!")
             adventurer.update(currency: adventurer.currency + self.currency)
-            # stop_music
-            # news_music
+            stop_music
+            news_music
             adventurer.get_movie_and_news
-            # stop_music
+            stop_music
             system("clear")
         end
     end

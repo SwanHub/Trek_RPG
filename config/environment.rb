@@ -11,12 +11,12 @@ connection = ActiveRecord::Base.establish_connection(adapter: 'sqlite3', databas
 ## eliminates message logging to terminal.
 ActiveRecord::Base.logger = nil
 User.connection
-stop_music
+# stop_music
 
 intro_animation_sequence
 
 ## title screen animations
-starting_music
+# starting_music
 start_animation
 
 ## user sign in // main menu
@@ -31,8 +31,8 @@ adventurer = main_user.create_adventurer
 adventurer.beginning_stats
 
 ## start level 1, fight or shop?
-stop_music
-exploration_music
+# stop_music
+# exploration_music
 level_one_logo
 
 
@@ -43,8 +43,8 @@ adventurer.exploring
 ## creates battles, creates enemy...
 enemy = adventurer.create_enemy
 enemy.center_format("You were ambushed by #{enemy.name}!!!!!!!")
-stop_music
-ambush_music
+# stop_music
+# ambush_music
 battle_blink_animation
 enemy_number = rand(0..5)
 enemy_icons[enemy_number].call
@@ -60,8 +60,8 @@ adventurer.return_block_to_original
 adventurer.encounter_castle
 boss = adventurer.encounter_boss
 
-stop_music
-boss_fight_music
+# stop_music
+# boss_fight_music
 battle_blink_animation
 adventurer.game_loop(boss, 6)
 adventurer.to_be_continued

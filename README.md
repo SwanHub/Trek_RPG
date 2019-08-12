@@ -2,7 +2,7 @@
 
 ![Trek_RPG](https://user-images.githubusercontent.com/47403119/62394632-02ff0780-b52b-11e9-9054-4523606c3a75.png)
 
-### Trek, the CLI RPG developed by Daniel Sanchez and Jackson Prince.
+### Developed by Daniel Sanchez and Jackson Prince.
 
 ## Application specs:
 
